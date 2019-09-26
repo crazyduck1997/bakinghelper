@@ -11,11 +11,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    /*@RequestMapping("/saveUser")
-    public JsonBean saveUser(){
-
+    @RequestMapping("/Login")
+    public JsonBean Login(String phone){
+        JsonBean bean = userService.Login(phone);
+        return bean;
     }
-*/
 
 
 }

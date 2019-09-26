@@ -1,21 +1,18 @@
 package com.qf.bakinghelper.common;
 
+import lombok.Data;
+
+@Data
 public class JsonBean {
 
 	private int code;
 	private Object info;
-	public int getCode() {
-		return code;
+
+	public JsonBean() {
 	}
-	public void setCode(int code) {
+
+	public JsonBean(int code, Object info) {
 		this.code = code;
-	}
-	public Object getInfo() {
-		return info;
-	}
-	public void setInfo(Object info) {
 		this.info = info;
 	}
-	
-	
 }
