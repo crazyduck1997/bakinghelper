@@ -1,9 +1,11 @@
 package com.qf.bakinghelper.service;
 
-import com.qf.bakinghelper.common.JsonBean;
+import com.qf.bakinghelper.entity.User;
 
 public interface UserService {
 
 
-    public JsonBean Login(String phone);
+    public User Login(String phone,String password);
+
+    public void addUser();
 }

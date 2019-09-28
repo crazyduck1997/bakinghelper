@@ -10,8 +10,12 @@ dao层接口中的方法名和映射文件中增删改查配置的statement id�
  -->
 <mapper namespace="com.qf.bakinghelper.dao.UserDao">
 
-    <select id="findByPhone" resultType="com.qf.bakinghelper.entity.User">
-        select * from user where phone = #{phone}
+    <select id="Login" resultType="com.qf.bakinghelper.entity.User">
+        select * from user where phone = #{phone} and password = #{password}
+    </select>
+
+    <select id="findAllUser" resultType="com.qf.bakinghelper.entity.User">
+        select * from user
     </select>
 	
 
