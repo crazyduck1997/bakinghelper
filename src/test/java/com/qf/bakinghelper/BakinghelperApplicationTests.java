@@ -35,9 +35,15 @@ public class BakinghelperApplicationTests {
     @Resource
     VideoDao videoDao;
 
+    /**
+     * 键和值都是String类型
+     */
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
+    /**
+     * redisTemplate可以存对象，但是要序列化
+     */
     @Autowired
     RedisTemplate redisTemplate;
 
