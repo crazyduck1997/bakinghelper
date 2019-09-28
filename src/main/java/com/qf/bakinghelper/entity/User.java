@@ -1,15 +1,16 @@
 package com.qf.bakinghelper.entity;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
+@ApiModel(value = "用户")
 @Data
 public class User {
 
     @ApiModelProperty(value = "用户id")
     private Integer userId;
     @ApiModelProperty(value = "账户id")
-    private Integer accountId;
+    private String accountId;
     @ApiModelProperty(value = "性别")
     private String sex;
     @ApiModelProperty(value = "头像链接")
@@ -32,6 +33,14 @@ public class User {
     private Integer medal;
     @ApiModelProperty(value = "等级")
     private String grade;
+    @ApiModelProperty(value = "手机")
+    private String phone;
+    @ApiModelProperty(value = "qq")
+    private String qq;
+    @ApiModelProperty(value = "微信")
+    private String wechat;
+    @ApiModelProperty(value = "密码")
+    private String password;
 
 
     }

@@ -17,8 +17,7 @@ import java.util.List;
 @SpringBootTest
 public class BakinghelperApplicationTests {
 
-    @Resource
-    AccountDao accountDao;
+
 
     @Resource
     AuthorDao authorDao;
@@ -65,13 +64,7 @@ public class BakinghelperApplicationTests {
 
 
 
-    @Test
-    public void userTest(){
-        List<Account> all = accountDao.selectAll();
-        for(Account u : all){
-            System.out.println(u);
-        }
-    }
+
 
     @Test
     public void authorTest(){
@@ -82,13 +75,6 @@ public class BakinghelperApplicationTests {
         System.out.println(i);
     }
 
-    @Test
-    public void accountTest(){
-        List<Account> all = accountDao.selectAll();
-        for(Account u : all){
-            System.out.println(u);
-        }
-    }
 
 
     @Test

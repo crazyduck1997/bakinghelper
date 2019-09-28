@@ -13,4 +13,8 @@ public interface UserDao {
     List<User> selectAll();
 
     int updateByPrimaryKey(User record);
+
+
+    //通过电话查询
+    User findByPhone(String phone);
 }
