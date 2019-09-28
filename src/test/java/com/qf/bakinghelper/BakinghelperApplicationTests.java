@@ -1,7 +1,7 @@
 package com.qf.bakinghelper;
 
-import com.qf.bakinghelper.dao.UserDao;
-import com.qf.bakinghelper.entity.User;
+import com.qf.bakinghelper.dao.*;
+import com.qf.bakinghelper.entity.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,22 @@ import java.util.List;
 public class BakinghelperApplicationTests {
 
     @Resource
+    AccountDao accountDao;
+
+    @Resource
+    AuthorDao authorDao;
+
+    @Resource
+    BakeCircleDao bakeCircleDao;
+
+    @Resource
+    BrowseDao browseDao;
+
+    @Resource
     UserDao userDao;
+
+    @Resource
+    VideoDao videoDao;
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
@@ -30,9 +45,9 @@ public class BakinghelperApplicationTests {
     public void contextLoads() {
         String phone = (String)stringRedisTemplate.opsForHash().get("user", "phone");
         if(phone==null){
-            User user = userDao.findByPhone("123");
-            stringRedisTemplate.opsForHash().put("user","phone",user.getPhone());
-            System.out.println("加入缓存"+user.getPhone());
+            phone = "123";
+            stringRedisTemplate.opsForHash().put("user","phone",phone);
+            System.out.println("加入缓存"+phone);
         }
         System.out.println("缓存中"+phone);
     }
@@ -41,5 +56,64 @@ public class BakinghelperApplicationTests {
     public void redisTest(){
         stringRedisTemplate.opsForHash().delete("user","phone");
     }
+
+
+
+    @Test
+    public void userTest(){
+        List<Account> all = accountDao.selectAll();
+        for(Account u : all){
+            System.out.println(u);
+        }
+    }
+
+    @Test
+    public void authorTest(){
+        Author author = new Author();
+        author.setAuthorName("lisi");
+        author.setAuthorId(1);
+        int i = authorDao.updateByPrimaryKey(author);
+        System.out.println(i);
+    }
+
+    @Test
+    public void accountTest(){
+        List<Account> all = accountDao.selectAll();
+        for(Account u : all){
+            System.out.println(u);
+        }
+    }
+
+
+    @Test
+    public void videoTest(){
+        List<Video> all = videoDao.selectAll();
+        for(Video u : all){
+            System.out.println(u);
+        }
+    }
+
+
+
+    @Test
+    public void bakeCircleTest(){
+        List<BakeCircle> all = bakeCircleDao.selectAll();
+        for(BakeCircle u : all){
+            System.out.println(u);
+        }
+    }
+
+    @Test
+    public void browseTest(){
+        List<Browse> all = browseDao.selectAll();
+        for(Browse u : all){
+            System.out.println(u);
+        }
+    }
+
+
+
+
+
 
 }
