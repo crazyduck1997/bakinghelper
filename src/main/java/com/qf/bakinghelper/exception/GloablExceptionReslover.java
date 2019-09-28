@@ -10,7 +10,7 @@ public class GloablExceptionReslover {
 
     @ExceptionHandler(Exception.class)
     public JsonBean exception(Exception e){
-        return new JsonBean(1,e.getMessage());
+        return new JsonBean(0,e.getMessage());
     }
 
 }
