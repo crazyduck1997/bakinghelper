@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.bakinghelper.dao.BrowseMapper" >
+  <resultMap id="BaseResultMap" type="Browse" >
+    <id column="browse_id" property="browseId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="video_id" property="videoId" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from browse
+    where browse_id = #{browseId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="Browse" >
+    insert into browse (browse_id, user_id, video_id
+      )
+    values (#{browseId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{videoId,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Browse" >
+    update browse
+    set user_id = #{userId,jdbcType=INTEGER},
+      video_id = #{videoId,jdbcType=INTEGER}
+    where browse_id = #{browseId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select browse_id, user_id, video_id
+    from browse
+    where browse_id = #{browseId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select browse_id, user_id, video_id
+    from browse
+  </select>
+</mapper>

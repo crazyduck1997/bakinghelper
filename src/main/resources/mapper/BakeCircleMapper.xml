@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.bakinghelper.dao.BakeCircleDao" >
+  <resultMap id="BaseResultMap" type="BakeCircle" >
+    <id column="circle_id" property="circleId" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="DATE" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="resources" property="resources" jdbcType="VARCHAR" />
+    <result column="praise" property="praise" jdbcType="VARCHAR" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bake_circle
+    where circle_id = #{circleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="BakeCircle" >
+    insert into bake_circle (circle_id, time, description, 
+      resources, praise, comments
+      )
+    values (#{circleId,jdbcType=INTEGER}, #{time,jdbcType=DATE}, #{description,jdbcType=VARCHAR}, 
+      #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="BakeCircle" >
+    update bake_circle
+    set time = #{time,jdbcType=DATE},
+      description = #{description,jdbcType=VARCHAR},
+      resources = #{resources,jdbcType=VARCHAR},
+      praise = #{praise,jdbcType=VARCHAR},
+      comments = #{comments,jdbcType=VARCHAR}
+    where circle_id = #{circleId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select circle_id, time, description, resources, praise, comments
+    from bake_circle
+    where circle_id = #{circleId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select circle_id, time, description, resources, praise, comments
+    from bake_circle
+  </select>
+</mapper>

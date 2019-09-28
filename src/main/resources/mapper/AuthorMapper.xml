@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.bakinghelper.dao.AuthorDao" >
+  <resultMap id="BaseResultMap" type="Author" >
+    <id column="author_id" property="authorId" jdbcType="INTEGER" />
+    <result column="author_name" property="authorName" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from author
+    where author_id = #{authorId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="Author" >
+    insert into author (author_id, author_name)
+    values (#{authorId,jdbcType=INTEGER}, #{authorName,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Author" >
+    update author
+    set author_name = #{authorName,jdbcType=VARCHAR}
+    where author_id = #{authorId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select author_id, author_name
+    from author
+    where author_id = #{authorId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select author_id, author_name
+    from author
+  </select>
+</mapper>
