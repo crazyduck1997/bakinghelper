@@ -1,4 +1,4 @@
-package com.qf.bakinghelper.Controller;
+package com.qf.bakinghelper.controller;
 
 import com.qf.bakinghelper.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
