@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "校验验证码")
-    @RequestMapping("/verifyCode.do")
+    @PostMapping("/verifyCode.do")
     public JsonBean verifyCode(String code,String token){
         userService.verifyCode(code, token);
         System.out.println(token);
@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "获取密码完成注册")
-    @RequestMapping("/regist.do")
+    @PostMapping("/regist.do")
     public JsonBean regist(String password, String token){
         User user = userService.regist(password, token);
 
