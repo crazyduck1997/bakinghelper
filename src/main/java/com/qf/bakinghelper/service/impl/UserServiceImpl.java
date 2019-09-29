@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public String findByPhone(String phone) {
+    public String getCode(String phone) {
         User user = userDao.findByPhone(phone);
         if(user!=null){
             throw new RuntimeException("手机号已注册");
@@ -90,6 +90,23 @@ public class UserServiceImpl implements UserService {
         user.setSex("保密");
         user.setNickname("烘焙新手"+uuid.substring(0,4));
         userDao.insert(user);
+        return user;
+    }
+
+    /**
+     * 手机号密码登录
+     * @param phone
+     * @return
+     */
+    @Override
+    public User login(String phone,String password) {
+        User user = userDao.findByPhone(phone);
+        if(user==null){
+            throw new RuntimeException("手机号错误");
+        }
+        if(!user.getPassword().equals(password)){
+            throw new RuntimeException("密码错误");
+        }
         return user;
     }
 

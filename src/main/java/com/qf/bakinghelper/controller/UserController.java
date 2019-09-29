@@ -23,7 +23,7 @@ public class UserController {
     @ApiOperation(value = "校验手机号并获取验证码",notes = "发送验证码")
     @PostMapping("/getCode.do")
     public JsonBean<String> getCode(String phone){
-        String token = userService.findByPhone(phone);
+        String token = userService.getCode(phone);
         return new JsonBean(1,token);
     }
 
@@ -39,12 +39,14 @@ public class UserController {
     @PostMapping("/regist.do")
     public JsonBean regist(String password, String token){
         User user = userService.regist(password, token);
-
         return new JsonBean(1,"成功");
     }
 
-
-
-
+    @ApiOperation(value = "手机号密码登录")
+    @PostMapping("/login.do")
+    public JsonBean login(String phone,String password){
+        User user = userService.login(phone,password);
+        return new JsonBean(1,user);
+    }
 
 }
