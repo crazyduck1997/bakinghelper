@@ -14,6 +14,8 @@ public class Video {
     private Integer authorId;
     @ApiModelProperty(value = "收藏人数")
     private Integer collectNum;
+    @ApiModelProperty(value = "专栏id")
+    private Integer featureId;
     @ApiModelProperty(value = "学习人数")
     private Integer cookNum;
     @ApiModelProperty(value = "类型id")
