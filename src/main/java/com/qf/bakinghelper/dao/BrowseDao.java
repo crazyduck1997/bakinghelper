@@ -5,7 +5,7 @@ import com.qf.bakinghelper.entity.Browse;
 import java.util.List;
 
 /**
- * 中间表关联uid和gid
+ * 用户浏览视频
  */
 public interface BrowseDao {
     //通过主键删除
