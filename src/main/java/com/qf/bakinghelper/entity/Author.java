@@ -10,6 +10,8 @@ public class Author {
     private Integer authorId;
     @ApiModelProperty(value = "作者名字")
     private String authorName;
+    @ApiModelProperty(value = "作者描述")
+    private String authorDescription;
 
 
 }

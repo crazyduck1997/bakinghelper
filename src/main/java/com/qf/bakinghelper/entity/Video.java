@@ -1,8 +1,9 @@
 package com.qf.bakinghelper.entity;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
+@ApiModel(value = "视频")
 @Data
 public class Video {
     @ApiModelProperty(value = "视频id")
@@ -15,8 +16,8 @@ public class Video {
     private Integer collectNum;
     @ApiModelProperty(value = "学习人数")
     private Integer cookNum;
-    @ApiModelProperty(value = "类型")
-    private String type;
+    @ApiModelProperty(value = "类型id")
+    private Integer typeId;
     @ApiModelProperty(value = "学会内容")
     private String content;
     @ApiModelProperty(value = "课程介绍")

@@ -1,9 +1,11 @@
 package com.qf.bakinghelper.entity;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+@ApiModel(value = "烘焙圈动态")
 @Data
 public class BakeCircle {
     @ApiModelProperty(value = "动态id")
