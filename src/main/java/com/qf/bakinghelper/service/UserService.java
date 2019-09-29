@@ -7,9 +7,9 @@ public interface UserService {
 
     public String findByPhone(String phone);
 
-    public String verifyCode(String code);
+    public String verifyCode(String code,String token);
 
-    public User regist(String password, String code);
+    public User regist(String password, String token);
 
 
 }
