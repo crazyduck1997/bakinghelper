@@ -1,30 +1,34 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.qf.bakinghelper.dao.AuthorDao" >
-  <resultMap id="BaseResultMap" type="Author" >
-    <id column="author_id" property="authorId" jdbcType="INTEGER" />
-    <result column="author_name" property="authorName" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.bakinghelper.dao.AuthorDao">
+  <resultMap id="BaseResultMap" type="Author">
+    <id column="author_id" jdbcType="INTEGER" property="authorId" />
+    <result column="author_name" jdbcType="VARCHAR" property="authorName" />
+    <result column="author_description" jdbcType="VARCHAR" property="authorDescription" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from author
     where author_id = #{authorId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="Author" >
-    insert into author (author_id, author_name)
-    values (#{authorId,jdbcType=INTEGER}, #{authorName,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="Author">
+    insert into author (author_id, author_name, author_description
+      )
+    values (#{authorId,jdbcType=INTEGER}, #{authorName,jdbcType=VARCHAR}, #{authorDescription,jdbcType=VARCHAR}
+      )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="Author" >
+  <update id="updateByPrimaryKey" parameterType="Author">
     update author
-    set author_name = #{authorName,jdbcType=VARCHAR}
+    set author_name = #{authorName,jdbcType=VARCHAR},
+      author_description = #{authorDescription,jdbcType=VARCHAR}
     where author_id = #{authorId,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select author_id, author_name
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select author_id, author_name, author_description
     from author
     where author_id = #{authorId,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select author_id, author_name
+  <select id="selectAll" resultMap="BaseResultMap">
+    select author_id, author_name, author_description
     from author
   </select>
 </mapper>
