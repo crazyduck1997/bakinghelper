@@ -32,6 +32,12 @@ public class BakinghelperApplicationTests {
     UserDao userDao;
 
     @Resource
+    FeatureDao featureDao;
+
+    @Resource
+    TypeDao typeDao;
+
+    @Resource
     VideoDao videoDao;
 
     /**
@@ -48,18 +54,18 @@ public class BakinghelperApplicationTests {
 
     @Test
     public void contextLoads() {
-        String phone = (String)stringRedisTemplate.opsForHash().get("user", "phone");
-        if(phone==null){
-            phone = "123";
-            stringRedisTemplate.opsForHash().put("user","phone",phone);
-            System.out.println("加入缓存"+phone);
+        boolean phone = stringRedisTemplate.hasKey("phone");
+        String num = "123";
+        if(!phone){
+            stringRedisTemplate.opsForValue().set("phone",num);
+            System.out.println("加入缓存"+num);
         }
-        System.out.println("缓存中"+phone);
+        System.out.println("缓存中"+num);
     }
 
     @Test
     public void redisTest(){
-        stringRedisTemplate.opsForHash().delete("user","phone");
+        stringRedisTemplate.delete("phone");
     }
 
 
@@ -68,13 +74,28 @@ public class BakinghelperApplicationTests {
 
     @Test
     public void authorTest(){
-        Author author = new Author();
-        author.setAuthorName("lisi");
-        author.setAuthorId(1);
-        int i = authorDao.updateByPrimaryKey(author);
-        System.out.println(i);
+
+        List<Author> list = authorDao.selectAll();
+        for(Author i : list){
+            System.out.println(i);
+        }
     }
 
+    @Test
+    public void featureTest(){
+        List<Feature> list = featureDao.selectAll();
+        for(Feature i : list){
+            System.out.println(i);
+        }
+    }
+
+    @Test
+    public void typeTest(){
+        List<Type> list = typeDao.selectAll();
+        for(Type i : list){
+            System.out.println(i);
+        }
+    }
 
 
     @Test
