@@ -77,4 +77,11 @@
     where phone = #{phone}
   </select>
 
+  <select id="findByAccountId" resultType="User" resultMap="BaseResultMap">
+    select user_id, account_id, sex, head_img, nickname, introduce, email, address, banggong,
+    watch_num, fans_num, medal, grade, phone, qq, wechat, password
+    from user
+    where account_id = #{accountId}
+  </select>
+
 </mapper>
