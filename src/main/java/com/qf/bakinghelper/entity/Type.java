@@ -13,7 +13,7 @@ public class Type {
     private Integer typeId;
     @ApiModelProperty(value = "食品类型")
     private String typeName;
-    @ApiModelProperty(value = "每种食品对应的食品")
+    @ApiModelProperty(value = "每种食品对应的视频")
     private List<Video> videos;
 
 

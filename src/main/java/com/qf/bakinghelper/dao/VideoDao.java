@@ -13,7 +13,8 @@ public interface VideoDao {
     List<Video> selectAll();
 
     int updateByPrimaryKey(Video record);
-
     //查询推荐视频
-    public List<Video> findAllHotVideo();
+    List<Video> findAllHotVideo();
+    //单个视频信息的查询
+    Video findOneVideoMessageByVideoId(Integer videoId);
 }

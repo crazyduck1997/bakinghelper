@@ -5,6 +5,20 @@
     <id column="author_id" jdbcType="INTEGER" property="authorId" />
     <result column="author_name" jdbcType="VARCHAR" property="authorName" />
     <result column="author_description" jdbcType="VARCHAR" property="authorDescription" />
+    <collection property="videos" ofType="com.qf.bakinghelper.entity.Video">
+      <id column="video_id" jdbcType="INTEGER" property="videoId" />
+      <result column="video_name" jdbcType="VARCHAR" property="videoName" />
+      <result column="author_id" jdbcType="INTEGER" property="authorId" />
+      <result column="collect_num" jdbcType="INTEGER" property="collectNum" />
+      <result column="cook_num" jdbcType="INTEGER" property="cookNum" />
+      <result column="feature_id" jdbcType="INTEGER" property="featureId" />
+      <result column="type_id" jdbcType="INTEGER" property="typeId" />
+      <result column="content" jdbcType="VARCHAR" property="content" />
+      <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+      <result column="learn" jdbcType="VARCHAR" property="learn" />
+      <result column="video_href" jdbcType="VARCHAR" property="videoHref" />
+      <result column="img_href" jdbcType="VARCHAR" property="imgHref" />
+    </collection>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from author
@@ -31,4 +45,11 @@
     select author_id, author_name, author_description
     from author
   </select>
+
+<!--  查询导师的所有信息及视频-->
+    <select id="findAuthorById" resultMap="BaseResultMap">
+        select author.*,video.* from author,video
+            where author.author_id = video.author_id
+            and author.author_id = #{id}
+    </select>
 </mapper>

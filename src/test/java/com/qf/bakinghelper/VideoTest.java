@@ -1,9 +1,11 @@
 package com.qf.bakinghelper;
 
 import com.qf.bakinghelper.dao.VideoDao;
+import com.qf.bakinghelper.entity.*;
 import com.qf.bakinghelper.entity.Video;
-import com.qf.bakinghelper.entity.Feature;
-import com.qf.bakinghelper.entity.Video;
+import com.qf.bakinghelper.service.AuthorService;
+import com.qf.bakinghelper.service.FeatureService;
+import com.qf.bakinghelper.service.TypeService;
 import com.qf.bakinghelper.service.VideoService;
 import io.swagger.annotations.ApiModel;
 import org.junit.Test;
@@ -24,7 +26,12 @@ public class VideoTest {
 
     @Autowired
     VideoService videoService;
-
+    @Autowired
+    FeatureService featureService;
+    @Autowired
+    TypeService typeService;
+    @Autowired
+    AuthorService authorService;
 
     @Test
     public void videoTest() {
@@ -42,7 +49,39 @@ public class VideoTest {
         }
         @Test
         public void test1() {
-            List<Feature> feature = videoService.findAllFeature();
+        //所有专栏对应视频查询遍历
+            List<Feature> feature = featureService.findAllFeature();
             System.out.println(feature);
+        }
+        @Test
+        public void test2(){
+        //单个专栏对应视频查询
+            List<Video> oneFeatureList = featureService.findOneFeatureAllVideoByFeatureId(1);
+            System.out.println(oneFeatureList);
+        }
+        @Test
+        public void test3(){
+        //查询视频对应食品的种类
+            List<Type> typeList = typeService.selectAll();
+            System.out.println(typeList);
+        }
+        @Test
+        public void test4(){
+        //查询单个type种类对应的所有视频
+            List<Video> typeVideosByTypeId = typeService.findOneTypeVideosByTypeId(1);
+            System.out.println(typeVideosByTypeId);
+        }
+
+        @Test
+        public void test5(){
+        //查询单个视频信息
+            Video onevideomesage = videoService.findOneVideoMessageByVideoId(1);
+            System.out.println(onevideomesage);
+        }
+        @Test
+        public void test6(){
+            //导师相关视频
+            Author author = authorService.findAuthorById(1);
+            System.out.println(author);
         }
     }
