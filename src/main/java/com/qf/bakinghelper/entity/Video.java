@@ -3,6 +3,9 @@ package com.qf.bakinghelper.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.List;
+
 @ApiModel(value = "视频")
 @Data
 public class Video {
@@ -14,8 +17,7 @@ public class Video {
     private Integer authorId;
     @ApiModelProperty(value = "收藏人数")
     private Integer collectNum;
-    @ApiModelProperty(value = "专栏id")
-    private Integer featureId;
+
     @ApiModelProperty(value = "学习人数")
     private Integer cookNum;
     @ApiModelProperty(value = "类型id")
@@ -30,5 +32,24 @@ public class Video {
     private String videoHref;
     @ApiModelProperty(value = "图片链接")
     private String imgHref;
+    @ApiModelProperty(value = "专栏id")
+    private Integer featureId;
 
+    public Video() {
     }
+
+    public Video(Integer videoId, String videoName, Integer authorId, Integer collectNum, Integer featureId, Integer cookNum, Integer typeId, String content, String introduce, String learn, String videoHref, String imgHref) {
+        this.videoId = videoId;
+        this.videoName = videoName;
+        this.authorId = authorId;
+        this.collectNum = collectNum;
+        this.featureId = featureId;
+        this.cookNum = cookNum;
+        this.typeId = typeId;
+        this.content = content;
+        this.introduce = introduce;
+        this.learn = learn;
+        this.videoHref = videoHref;
+        this.imgHref = imgHref;
+    }
+}

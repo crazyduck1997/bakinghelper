@@ -13,4 +13,5 @@ public interface TypeDao {
     List<Type> selectAll();
 
     int updateByPrimaryKey(Type record);
+
 }

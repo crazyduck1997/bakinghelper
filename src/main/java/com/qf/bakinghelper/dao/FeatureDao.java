@@ -10,7 +10,8 @@ public interface FeatureDao {
 
     Feature selectByPrimaryKey(Integer featureId);
 
-    List<Feature> selectAll();
+    //查询专栏的种类
+    public List<Feature> findAllFeature();
 
     int updateByPrimaryKey(Feature record);
 }

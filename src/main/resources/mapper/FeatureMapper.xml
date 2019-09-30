@@ -23,7 +23,10 @@
     from feature
     where feature_id = #{featureId,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+
+
+<!--  查询专栏的种类-->
+  <select id="findAllFeature" resultMap="BaseResultMap">
     select feature_id, feature_name
     from feature
   </select>

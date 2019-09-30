@@ -55,4 +55,12 @@
     introduce, learn, video_href, img_href
     from video
   </select>
+
+<!--  查询推荐视频，在线学习人数为参考，选取数量最多的5位-->
+    <select id="findAllHotVideo" resultMap="BaseResultMap">
+        select * from video order by cook_num desc limit 0,5
+    </select>
+<!--    主页遍历各个专栏的视频-->
+
+
 </mapper>

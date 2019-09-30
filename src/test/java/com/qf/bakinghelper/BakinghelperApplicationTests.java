@@ -81,13 +81,13 @@ public class BakinghelperApplicationTests {
         }
     }
 
-    @Test
-    public void featureTest(){
-        List<Feature> list = featureDao.selectAll();
-        for(Feature i : list){
-            System.out.println(i);
-        }
-    }
+   // @Test
+//    public void featureTest(){
+//        List<Feature> list = featureDao.selectAll();
+//        for(Feature i : list){
+//            System.out.println(i);
+//        }
+//    }
 
     @Test
     public void typeTest(){
