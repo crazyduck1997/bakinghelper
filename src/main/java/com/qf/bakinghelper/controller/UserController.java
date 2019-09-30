@@ -29,8 +29,8 @@ public class UserController {
     @ApiOperation(value = "校验验证码,完成注册")
     @PostMapping("/verifyCode.do")
     public JsonBean verifyCode(String code,String token,String password){
-        User user = userService.regist(code, token, password);
-        return new JsonBean(1,user);
+        token = userService.regist(code, token, password);
+        return new JsonBean(1,token);
     }
 
 
