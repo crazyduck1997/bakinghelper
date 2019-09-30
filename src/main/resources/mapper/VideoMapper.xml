@@ -60,7 +60,10 @@
     <select id="findAllHotVideo" resultMap="BaseResultMap">
         select * from video order by cook_num desc limit 0,5
     </select>
-<!--    主页遍历各个专栏的视频-->
 
+<!--    查询单个视频的信息-->
+    <select id="findOneVideoMessageByVideoId" resultMap="BaseResultMap">
+        select * from video where video_id = #{id}
+    </select>
 
 </mapper>

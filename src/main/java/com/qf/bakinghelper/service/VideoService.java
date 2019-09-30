@@ -8,8 +8,8 @@ import java.util.List;
 public interface VideoService {
 
     //查询推荐视频
-    public List<Video> findAllHotVideo();
-    //查询专栏的种类
-    public List<Feature> findAllFeature();
+    List<Video> findAllHotVideo();
 
+    //单个视频信息的查询
+    Video findOneVideoMessageByVideoId(Integer videoId);
 }

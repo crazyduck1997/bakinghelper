@@ -9,16 +9,16 @@ import com.qf.bakinghelper.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class VideoServiceImpl implements VideoService {
 
 
-    @Autowired
+    @Resource
     private VideoDao videoDao;
-    @Autowired
-    private FeatureDao featureDao;
+
 
     @Override
     public List<Video> findAllHotVideo() {
@@ -28,10 +28,10 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public List<Feature> findAllFeature() {
-        //查询所有的专栏种类
-        List<Feature> featureList = featureDao.findAllFeature();
-        return featureList;
+    public Video findOneVideoMessageByVideoId(Integer videoId) {
+        //查询单个视频信息
+        Video oneVideo = videoDao.findOneVideoMessageByVideoId(videoId);
+        return oneVideo;
     }
 
 }

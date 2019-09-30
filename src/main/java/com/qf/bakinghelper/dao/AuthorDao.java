@@ -15,4 +15,9 @@ public interface AuthorDao {
     List<Author> selectAll();
 
     int updateByPrimaryKey(Author record);
+
+    //查询导师的信息及其他课程
+    Author findAuthorById(Integer autherId);
+
+
 }
