@@ -47,11 +47,10 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
-        String token = MD5Utils.md5(code + "abc");
-        stringRedisTemplate.opsForValue().set(token, phone);
-        stringRedisTemplate.expire(token, 5, TimeUnit.MINUTES);
-
-        return token;
+        String mdCode= MD5Utils.md5(code + "abc");
+        stringRedisTemplate.opsForValue().set(mdCode, phone);
+        stringRedisTemplate.expire(mdCode, 5, TimeUnit.MINUTES);
+        return mdCode;
     }
 
     /**
@@ -62,14 +61,10 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public String regist(String code, String token, String password) {
-        String phone = stringRedisTemplate.opsForValue().get(token);
+    public String regist(String code, String password) {
+        String phone = stringRedisTemplate.opsForValue().get(code);
         if (phone == null || phone.equals("")) {
-            throw new RuntimeException("验证码过期，请重新获取");
-        }
-        String token2 = MD5Utils.md5(code + "abc");
-        if (!token.equals(token2)) {
-            throw new RuntimeException("验证码错误");
+            throw new RuntimeException("验证码错误，请重新获取");
         }
         User user = new User();
         String uuid = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
@@ -78,8 +73,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(password);
         user.setNickname("烘焙新手" + uuid.substring(0, 4));
         userDao.insert(user);
-        stringRedisTemplate.delete(token);
-        token= MD5Utils.getToken();
+        String token= MD5Utils.getToken();
         stringRedisTemplate.opsForValue().set(token,user.getAccountId());
         return token;
     }

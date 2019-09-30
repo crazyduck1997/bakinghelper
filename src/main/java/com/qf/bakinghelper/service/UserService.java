@@ -7,7 +7,7 @@ public interface UserService {
 
     public String getCode(String phone);
 
-    public String regist(String code, String token,String password);
+    public String regist(String code,String password);
 
     public String login(String phone,String password);
 
