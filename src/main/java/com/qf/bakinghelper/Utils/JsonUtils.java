@@ -9,7 +9,7 @@ public class JsonUtils {
 		JsonBean bean = new JsonBean();
 		bean.setCode(code);
 		bean.setInfo(info);
-		
+
 		return bean;
 	}
 }
