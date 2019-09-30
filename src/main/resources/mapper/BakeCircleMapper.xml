@@ -1,42 +1,75 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.qf.bakinghelper.dao.BakeCircleDao" >
-  <resultMap id="BaseResultMap" type="BakeCircle" >
-    <id column="circle_id" property="circleId" jdbcType="INTEGER" />
-    <result column="time" property="time" jdbcType="DATE" />
-    <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="resources" property="resources" jdbcType="VARCHAR" />
-    <result column="praise" property="praise" jdbcType="VARCHAR" />
-    <result column="comments" property="comments" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.bakinghelper.dao.BakeCircleDao">
+  <resultMap id="BaseResultMap" type="com.qf.bakinghelper.entity.BakeCircle">
+    <id column="circle_id" jdbcType="INTEGER" property="circleId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="time" jdbcType="DATE" property="time" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="resources" jdbcType="VARCHAR" property="resources" />
+    <result column="praise" jdbcType="VARCHAR" property="praise" />
+    <result column="comment_id" jdbcType="INTEGER" property="commentId" />
+    <association property="user" column="user_id" javaType="com.qf.bakinghelper.entity.User">
+      <id column="user_id" property="userId" jdbcType="INTEGER" />
+      <result column="account_id" property="accountId" jdbcType="VARCHAR" />
+      <result column="sex" property="sex" jdbcType="VARCHAR" />
+      <result column="head_img" property="headImg" jdbcType="VARCHAR" />
+      <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+      <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+      <result column="email" property="email" jdbcType="VARCHAR" />
+      <result column="address" property="address" jdbcType="VARCHAR" />
+      <result column="banggong" property="banggong" jdbcType="INTEGER" />
+      <result column="watch_num" property="watchNum" jdbcType="INTEGER" />
+      <result column="fans_num" property="fansNum" jdbcType="INTEGER" />
+      <result column="medal" property="medal" jdbcType="INTEGER" />
+      <result column="grade" property="grade" jdbcType="VARCHAR" />
+      <result column="phone" property="phone" jdbcType="VARCHAR" />
+      <result column="qq" property="qq" jdbcType="VARCHAR" />
+      <result column="wechat" property="wechat" jdbcType="VARCHAR" />
+      <result column="password" property="password" jdbcType="VARCHAR" />
+    </association>
+    <association property="comment" column="comment_id" javaType="com.qf.bakinghelper.entity.Comment">
+      <id column="comment_id" jdbcType="INTEGER" property="commentId" />
+      <result column="user_id" jdbcType="INTEGER" property="userId" />
+      <result column="comment_time" jdbcType="DATE" property="commentTime" />
+    </association>
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from bake_circle
     where circle_id = #{circleId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="BakeCircle" >
-    insert into bake_circle (circle_id, time, description, 
-      resources, praise, comments
-      )
-    values (#{circleId,jdbcType=INTEGER}, #{time,jdbcType=DATE}, #{description,jdbcType=VARCHAR}, 
-      #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="com.qf.bakinghelper.entity.BakeCircle">
+    insert into bake_circle (circle_id, user_id, time, 
+      description, resources, praise, 
+      comment_id)
+    values (#{circleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{time,jdbcType=DATE}, 
+      #{description,jdbcType=VARCHAR}, #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR}, 
+      #{commentId,jdbcType=INTEGER})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="BakeCircle" >
+  <update id="updateByPrimaryKey" parameterType="com.qf.bakinghelper.entity.BakeCircle">
     update bake_circle
-    set time = #{time,jdbcType=DATE},
+    set user_id = #{userId,jdbcType=INTEGER},
+      time = #{time,jdbcType=DATE},
       description = #{description,jdbcType=VARCHAR},
       resources = #{resources,jdbcType=VARCHAR},
       praise = #{praise,jdbcType=VARCHAR},
-      comments = #{comments,jdbcType=VARCHAR}
+      comment_id = #{commentId,jdbcType=INTEGER}
     where circle_id = #{circleId,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select circle_id, time, description, resources, praise, comments
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select circle_id, user_id, time, description, resources, praise, comment_id
     from bake_circle
     where circle_id = #{circleId,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select circle_id, time, description, resources, praise, comments
-    from bake_circle
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT
+    *
+    FROM
+    bake_circle ,
+    `user` ,
+    `comment`
+    WHERE
+    bake_circle.user_id = `user`.user_id AND
+    bake_circle.comment_id = `comment`.comment_id order by time desc
   </select>
 </mapper>
