@@ -12,5 +12,4 @@ public class GloablExceptionReslover {
     public JsonBean exception(Exception e){
         return new JsonBean(0,e.getMessage());
     }
-
 }
