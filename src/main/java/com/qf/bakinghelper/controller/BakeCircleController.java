@@ -35,17 +35,19 @@ public class BakeCircleController {
     }
     @ApiOperation(value = "烘焙圈对象",notes = "发表烘焙圈信息")
     @PostMapping("/add.do")
-    public JsonBean add(BakeCircle bakeCircle, MultipartFile file,String token){
+    public JsonBean add(String description, MultipartFile file,String token){
         if (file.isEmpty()) {
             return new JsonBean(0,"请选择文件");
         }
         UUID uuid = UUID.randomUUID();
         String fileName = uuid.toString().replace("-","");
-        String filePath = "http://47.240.68.134:8889/bakecircle/";
+        String filePath = "/usr/local/tomcat/webapps/bakecircle/";
         File dest = new File(filePath + fileName + ".jpg");
         try {
             file.transferTo(dest);
-            bakeCircle.setResources(filePath + fileName + ".jpg");
+            BakeCircle bakeCircle = new BakeCircle();
+            bakeCircle.setDescription(description);
+            bakeCircle.setResources("http://47.240.68.134:8889/bakecircle/"+fileName + ".jpg");
             bakeCircleService.insert(bakeCircle,token);
             return new JsonBean(1,"上传成功");
         } catch (IOException e) {

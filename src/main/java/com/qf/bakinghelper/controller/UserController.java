@@ -72,7 +72,7 @@ public class UserController {
         return new JsonBean(1,"验证码已发送");
     }
 
-    @ApiOperation(value = "验证")
+    @ApiOperation(value = "修改密码,验证验证码")
     @PostMapping("/updatePwd.do")
     public JsonBean updatePwd(String code,String password,String token){
         Integer i = userService.updatePwd(code, password, token);

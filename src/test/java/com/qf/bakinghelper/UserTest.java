@@ -30,24 +30,12 @@ public class UserTest {
     @Autowired
     RedisTemplate redisTemplate;
 
-    @Test
-    public void redisTest(){
-        Boolean phone = stringRedisTemplate.hasKey("phone");
-        System.out.println(phone);
-    }
+
 
     @Test
     public void userTest(){
         User user = userDao.findByAccountId("31649c9d");
         System.out.println(user);
-    }
-
-    @Test
-    public void upodateTest(){
-        User user = new User();
-        user.setQq("129837129");
-        Integer asd = userService.update(user, "31048c3bff1290453a6465cec7deb5e7");
-        System.out.println(asd);
     }
 
 }
