@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.spring.web.json.Json;
 
 
 @Api(value = "用户")
@@ -23,8 +24,8 @@ public class UserController {
     @ApiOperation(value = "校验手机号并获取验证码",notes = "发送验证码")
     @PostMapping("/getCode.do")
     public JsonBean<String> getCode(String phone){
-        String mdCode = userService.getCode(phone);
-        return new JsonBean(1,mdCode);
+        userService.getCode(phone);
+        return new JsonBean(1,"验证码已发送");
     }
 
     @ApiOperation(value = "校验验证码,完成注册")
@@ -57,8 +58,25 @@ public class UserController {
         return new JsonBean(1,user);
     }
 
+    @ApiOperation(value = "修改个人设置，除头像")
+    @PostMapping("/updateUser.do")
+    public JsonBean updateUser(User user , String token){
+        Integer integer = userService.update(user, token);
+        return new JsonBean(integer,"修改成功");
+    }
 
+    @ApiOperation(value = "修改密码，手机验证")
+    @PostMapping("/updatePwdVerifyPhone.do")
+    public JsonBean updatePwdVerifyPhone(String phone,String token){
+        userService.updatePwdGetCode(phone, token);
+        return new JsonBean(1,"验证码已发送");
+    }
 
-
+    @ApiOperation(value = "验证")
+    @PostMapping("/updatePwd.do")
+    public JsonBean updatePwd(String code,String password,String token){
+        Integer i = userService.updatePwd(code, password, token);
+        return new JsonBean(i,"重置成功");
+    }
 
 }

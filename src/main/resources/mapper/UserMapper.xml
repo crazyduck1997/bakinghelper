@@ -38,7 +38,62 @@
       #{grade,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR},
       #{password,jdbcType=VARCHAR})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="User" >
+  <update id="updateByAccountId" parameterType="User" >
+    update user
+    set
+     <trim suffixOverrides=",">
+     <if test="accountId != null">
+       account_id = #{accountId,jdbcType=VARCHAR},
+     </if>
+       <if test="sex != null">
+         sex = #{sex,jdbcType=VARCHAR},
+       </if>
+       <if test="headImg != null">
+         head_img = #{headImg,jdbcType=VARCHAR},
+       </if>
+       <if test="nickname != null">
+         nickname = #{nickname,jdbcType=VARCHAR},
+       </if>
+       <if test="introduce != null">
+         introduce = #{introduce,jdbcType=VARCHAR},
+       </if>
+       <if test="email != null">
+         email = #{email,jdbcType=VARCHAR},
+       </if>
+       <if test="address != null">
+         address = #{address,jdbcType=VARCHAR},
+       </if>
+       <if test="banggong != null">
+         banggong = #{banggong,jdbcType=INTEGER},
+       </if>
+       <if test="watchNum != null">
+         watch_num = #{watchNum,jdbcType=INTEGER},
+       </if>
+       <if test="fansNum != null">
+         fans_num = #{fansNum,jdbcType=INTEGER},
+       </if>
+       <if test="medal != null">
+         medal = #{medal,jdbcType=INTEGER},
+     </if>
+       <if test="grade != null">
+         grade = #{grade,jdbcType=VARCHAR},
+       </if>
+       <if test="phone != null">
+         phone = #{phone,jdbcType=VARCHAR},
+       </if>
+       <if test="qq != null">
+         qq = #{qq,jdbcType=VARCHAR},
+       </if>
+       <if test="wechat != null">
+         wechat = #{wechat,jdbcType=VARCHAR},
+       </if>
+       <if test="password != null">
+         password = #{password,jdbcType=VARCHAR},
+       </if>
+     </trim>
+    where account_id = #{accountId,jdbcType=VARCHAR}
+  </update>
+  <!--<update id="updateByPrimaryKey" parameterType="User" >
     update user
     set account_id = #{accountId,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
@@ -57,7 +112,7 @@
       wechat = #{wechat,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
-  </update>
+  </update>-->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select user_id, account_id, sex, head_img, nickname, introduce, email, address, banggong,
     watch_num, fans_num, medal, grade, phone, qq, wechat, password

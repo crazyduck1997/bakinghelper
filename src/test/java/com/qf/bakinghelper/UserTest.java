@@ -1,7 +1,9 @@
 package com.qf.bakinghelper;
 
+import com.qf.bakinghelper.controller.UserController;
 import com.qf.bakinghelper.dao.UserDao;
 import com.qf.bakinghelper.entity.User;
+import com.qf.bakinghelper.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class UserTest {
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
+    @Resource
+    UserService userService;
+
     @Autowired
     RedisTemplate redisTemplate;
 
@@ -35,6 +40,14 @@ public class UserTest {
     public void userTest(){
         User user = userDao.findByAccountId("31649c9d");
         System.out.println(user);
+    }
+
+    @Test
+    public void upodateTest(){
+        User user = new User();
+        user.setQq("129837129");
+        Integer asd = userService.update(user, "31048c3bff1290453a6465cec7deb5e7");
+        System.out.println(asd);
     }
 
 }
