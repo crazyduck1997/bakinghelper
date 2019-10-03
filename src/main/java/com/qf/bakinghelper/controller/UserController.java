@@ -6,13 +6,13 @@ import com.qf.bakinghelper.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
 
 @Api(value = "用户")
+@CrossOrigin
 @RestController
 public class UserController {
 
@@ -23,30 +23,42 @@ public class UserController {
     @ApiOperation(value = "校验手机号并获取验证码",notes = "发送验证码")
     @PostMapping("/getCode.do")
     public JsonBean<String> getCode(String phone){
-        String token = userService.getCode(phone);
-        return new JsonBean(1,token);
+        String mdCode = userService.getCode(phone);
+        return new JsonBean(1,mdCode);
     }
 
-    @ApiOperation(value = "校验验证码")
+    @ApiOperation(value = "校验验证码,完成注册")
     @PostMapping("/verifyCode.do")
-    public JsonBean verifyCode(String code,String token){
-        userService.verifyCode(code, token);
-        System.out.println(token);
+    public JsonBean verifyCode(String code,String password){
+        String token = userService.regist(code,password);
         return new JsonBean(1,token);
     }
 
-    @ApiOperation(value = "获取密码完成注册")
-    @PostMapping("/regist.do")
-    public JsonBean regist(String password, String token){
-        User user = userService.regist(password, token);
-        return new JsonBean(1,"成功");
-    }
 
     @ApiOperation(value = "手机号密码登录")
     @PostMapping("/login.do")
     public JsonBean login(String phone,String password){
-        User user = userService.login(phone,password);
+        String token = userService.login(phone, password);
+        return new JsonBean(1,token);
+    }
+
+
+    @ApiOperation(value = "用户注销")
+    @PostMapping("/loginOut.do")
+    public JsonBean loginOut(String token){
+        String loginOut = userService.loginOut(token);
+        return new JsonBean(1,loginOut);
+    }
+
+    @ApiOperation(value = "个人信息展示以及账户信息展示")
+    @PostMapping("/userInfo.do")
+    public JsonBean userInfo(String token){
+        User user = userService.userInfo(token);
         return new JsonBean(1,user);
     }
+
+
+
+
 
 }

@@ -7,11 +7,14 @@ public interface UserService {
 
     public String getCode(String phone);
 
-    public String verifyCode(String code,String token);
+    public String regist(String code,String password);
 
-    public User regist(String password, String token);
+    public String login(String phone,String password);
 
-    public User login(String phone,String password);
+    public String loginOut(String token);
 
+    public User userInfo(String token);
+
+    public String updatePwdGetCode(String phone,String token);
 
 }

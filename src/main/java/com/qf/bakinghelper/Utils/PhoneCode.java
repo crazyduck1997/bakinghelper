@@ -88,7 +88,7 @@ public class PhoneCode {
         return newcode;
     }
     public static void setNewcode(){
-        newcode = (int)(Math.random()*9999)+100;  //每次调用生成一位四位数的随机数
+        newcode = (int)(Math.random()*999999)+100;  //每次调用生成一位6位数的随机数
     }
     public static void main(String[] args) throws ClientException, InterruptedException {
         setNewcode();
