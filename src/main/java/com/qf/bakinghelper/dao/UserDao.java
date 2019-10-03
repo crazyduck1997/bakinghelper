@@ -14,6 +14,8 @@ public interface UserDao {
 
     int updateByPrimaryKey(User record);
 
+    public User findByAccountId(String accountId);
+
 
     //通过电话查询
     User findByPhone(String phone);

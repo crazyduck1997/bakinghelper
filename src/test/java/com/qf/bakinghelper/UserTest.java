@@ -31,15 +31,10 @@ public class UserTest {
         System.out.println(phone);
     }
 
-
- /*   @Test
-    public void givenUsingPlainJava_whenGeneratingRandomStringUnbounded_thenCorrect() {
-        byte[] array = new byte[5]; // length is bounded by 7
-        new Random().nextBytes(array);
-        String generatedString = new String(array, Charset.forName("UTF-8"));
-
-        System.out.println(generatedString);
+    @Test
+    public void userTest(){
+        User user = userDao.findByAccountId("31649c9d");
+        System.out.println(user);
     }
-*/
 
 }

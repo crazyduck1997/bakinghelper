@@ -3,6 +3,9 @@ package com.qf.bakinghelper.Utils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 public class MD5Utils {
 
@@ -29,7 +32,20 @@ public class MD5Utils {
     }
 	
 	public static void main(String[] args) {
-		String md5 = md5("123");
-		System.out.println(md5);
-	}
+
+        String token = getToken();
+        System.out.println(token);
+    }
+
+    /**
+     * 根据当前时间和uuid生成token
+     * @return
+     */
+	public static String getToken(){
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        String newTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String token= md5(uuid + newTime);
+        return token;
+    }
+
 }
