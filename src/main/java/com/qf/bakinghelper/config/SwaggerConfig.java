@@ -43,7 +43,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("测试 APIs")
                 .description("测试api接口文档")
-                .termsOfServiceUrl("http://www.qfedu.com")
+                .termsOfServiceUrl("http://47.240.68.134:8889/backinghelper/swagger-ui.html")
                 .version("1.0")
                 .build();
     }

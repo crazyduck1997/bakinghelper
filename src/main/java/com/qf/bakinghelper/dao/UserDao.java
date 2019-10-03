@@ -12,7 +12,7 @@ public interface UserDao {
 
     List<User> selectAll();
 
-    int updateByPrimaryKey(User record);
+    int updateByAccountId(User record);
 
     public User findByAccountId(String accountId);
 

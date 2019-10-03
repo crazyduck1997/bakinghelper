@@ -62,7 +62,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public String regist(String code, String password) {
-        String phone = stringRedisTemplate.opsForValue().get(code);
+        String mdCode = MD5Utils.md5(code + "abc");
+        String phone = stringRedisTemplate.opsForValue().get(mdCode);
         if (phone == null || phone.equals("")) {
             throw new RuntimeException("验证码错误，请重新获取");
         }
@@ -72,6 +73,12 @@ public class UserServiceImpl implements UserService {
         user.setAccountId(uuid);
         user.setPassword(password);
         user.setNickname("烘焙新手" + uuid.substring(0, 4));
+        user.setSex("保密");
+        user.setBanggong(20);
+        user.setFansNum(0);
+        user.setWatchNum(0);
+        user.setGrade("1");
+        user.setMedal(0);
         userDao.insert(user);
         String token= MD5Utils.getToken();
         stringRedisTemplate.opsForValue().set(token,user.getAccountId());
@@ -142,6 +149,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public String updatePwdGetCode(String phone, String token) {
         String account_id = stringRedisTemplate.opsForValue().get(token);
+        if(account_id==null || account_id.equals("")){
+            throw new RuntimeException("请重新登录");
+        }
         User user = userDao.findByAccountId(account_id);
         if (!phone.equals(user.getPhone())) {
             throw new RuntimeException("手机号输入有误");
@@ -153,11 +163,46 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
-        token = MD5Utils.md5(code + "abc");
-        stringRedisTemplate.opsForValue().set(token, phone);
-        stringRedisTemplate.expire(token, 5, TimeUnit.MINUTES);
-        return token;
+        String mdCode = MD5Utils.md5(code + "abc");
+        stringRedisTemplate.opsForValue().set(mdCode, phone);
+        stringRedisTemplate.expire(mdCode, 5, TimeUnit.MINUTES);
+        return mdCode;
     }
 
+
+    /**
+     * 修改除头像的个人信息
+     * @param user
+     * @param token
+     * @return
+     */
+    @Override
+    public Integer update(User user ,String token){
+        String accountId = stringRedisTemplate.opsForValue().get(token);
+        if(accountId==null || accountId.equals("")){
+            throw new RuntimeException("请重新登录");
+        }
+        User user1 = userDao.findByAccountId(accountId);
+        user.setAccountId(user1.getAccountId());
+        int i = userDao.updateByAccountId(user);
+        return i;
+    }
+
+    @Override
+    public Integer updatePwd(String code,String password,String token){
+        String mdCode = MD5Utils.md5(code + "abc");
+        String phone = stringRedisTemplate.opsForValue().get(mdCode);
+        if(phone==null || phone.equals("")){
+            throw new RuntimeException("验证码失效，请重新获取");
+        }
+        String accountId = stringRedisTemplate.opsForValue().get(token);
+        if(accountId==null || accountId.equals("")){
+            throw new RuntimeException("请重新登录");
+        }
+        User user = userDao.findByAccountId(accountId);
+        user.setPassword(password);
+        int i = userDao.updateByAccountId(user);
+        return i;
+    }
 
 }

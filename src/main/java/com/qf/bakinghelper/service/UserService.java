@@ -17,4 +17,9 @@ public interface UserService {
 
     public String updatePwdGetCode(String phone,String token);
 
+    public Integer update(User user ,String token);
+
+    public Integer updatePwd(String code,String password,String token);
+
+
 }
