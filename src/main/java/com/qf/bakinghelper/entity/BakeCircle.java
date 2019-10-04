@@ -29,7 +29,7 @@ public class BakeCircle {
 
     private List<Comment> comments;
 
-    private FootType footType;
+    private FoodType foodType;
 
 
 

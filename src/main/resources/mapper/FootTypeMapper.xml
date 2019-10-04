@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.qf.bakinghelper.dao.FootTypeDao" >
+<mapper namespace="com.qf.bakinghelper.dao.FoodTypeDao" >
     <resultMap id="BaseResultMap" type="com.qf.bakinghelper.entity.Detail" >
         <id column="d_id" property="dId" jdbcType="INTEGER" />
         <result column="detail_name" property="detailName" jdbcType="VARCHAR" />
         <result column="t_id" property="tId" jdbcType="INTEGER" />
-        <collection property="footTypes" ofType="com.qf.bakinghelper.entity.FootType">
+        <collection property="foodTypes" ofType="com.qf.bakinghelper.entity.FoodType">
             <id column="foot_id" property="footId" jdbcType="INTEGER" />
             <result column="type_name" property="typeName" jdbcType="VARCHAR" />
             <result column="d_id" property="dId" jdbcType="INTEGER" />
             <result column="food_img" property="foodImg" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
-    <select id="footTypeList" resultMap="BaseResultMap">
+    <select id="foodTypeList" resultMap="BaseResultMap">
         SELECT detail_name,type_name,food_img FROM type_detail LEFT JOIN food_type ON type_detail.d_id = food_type.d_id
     </select>
 
 
-    <select id="footList" resultMap="BaseResultMap">
+    <select id="foodList" resultMap="BaseResultMap">
         SELECT type_name,food_img from food_type
     </select>
 

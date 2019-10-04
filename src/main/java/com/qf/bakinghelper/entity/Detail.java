@@ -13,7 +13,7 @@ public class Detail {
     private Integer tId;
 
     @ApiModelProperty(value = "根据具体的食品类型查询所有的食品")
-    public List<FootType> footTypes;
+    public List<FoodType> foodTypes;
 
 
     public Detail() {

@@ -35,7 +35,7 @@
       <result column="comment_time" jdbcType="DATE" property="commentTime" />
       <result column="comment" jdbcType="VARCHAR" property="comment"/>
     </association>
-    <association property="footType" javaType="com.qf.bakinghelper.entity.FootType">
+    <association property="foodType" javaType="com.qf.bakinghelper.entity.FoodType">
       <id column="d_id" property="dId" jdbcType="INTEGER" />
       <result column="detail_name" property="detailName" jdbcType="VARCHAR" />
       <result column="t_id" property="tId" jdbcType="INTEGER" />
