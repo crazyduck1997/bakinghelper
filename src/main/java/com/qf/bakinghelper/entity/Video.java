@@ -34,16 +34,17 @@ public class Video {
     private String imgHref;
     @ApiModelProperty(value = "专栏id")
     private Integer featureId;
+    @ApiModelProperty(value = "对应的技巧百科类型id")
+    private Integer tyId;
 
     public Video() {
     }
 
-    public Video(Integer videoId, String videoName, Integer authorId, Integer collectNum, Integer featureId, Integer cookNum, Integer typeId, String content, String introduce, String learn, String videoHref, String imgHref) {
+    public Video(Integer videoId, String videoName, Integer authorId, Integer collectNum, Integer cookNum, Integer typeId, String content, String introduce, String learn, String videoHref, String imgHref, Integer featureId, Integer tyId) {
         this.videoId = videoId;
         this.videoName = videoName;
         this.authorId = authorId;
         this.collectNum = collectNum;
-        this.featureId = featureId;
         this.cookNum = cookNum;
         this.typeId = typeId;
         this.content = content;
@@ -51,5 +52,7 @@ public class Video {
         this.learn = learn;
         this.videoHref = videoHref;
         this.imgHref = imgHref;
+        this.featureId = featureId;
+        this.tyId = tyId;
     }
 }
