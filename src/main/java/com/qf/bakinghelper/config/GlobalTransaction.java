@@ -5,6 +5,7 @@ import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -23,7 +24,7 @@ public class GlobalTransaction {
 
     //restful包下所有service包或者service的子包的任意类的任意方法
     //第一个*表示任意返回值，第二个表示类名，第三个表示方法
-    private static final String AOP_POINTCUT_EXPRESSION = "execution (* com.qfedu.spring_mybatis.service.impl.*.*(..))";
+    private static final String AOP_POINTCUT_EXPRESSION = "execution (* com.qf.bakinghelper.service.impl.*.*(..))";
 
     @Autowired
     private PlatformTransactionManager transactionManager;

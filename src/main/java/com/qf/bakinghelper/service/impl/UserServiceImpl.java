@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
-        String mdCode= MD5Utils.md5(code + "abc");
+        String mdCode = MD5Utils.md5(code + "abc");
         stringRedisTemplate.opsForValue().set(mdCode, phone);
         stringRedisTemplate.expire(mdCode, 5, TimeUnit.MINUTES);
         return mdCode;
@@ -80,8 +81,8 @@ public class UserServiceImpl implements UserService {
         user.setGrade("1");
         user.setMedal(0);
         userDao.insert(user);
-        String token= MD5Utils.getToken();
-        stringRedisTemplate.opsForValue().set(token,user.getAccountId());
+        String token = MD5Utils.getToken();
+        stringRedisTemplate.opsForValue().set(token, user.getAccountId());
         return token;
     }
 
@@ -102,7 +103,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("密码错误");
         }
         String token = MD5Utils.getToken();
-        stringRedisTemplate.opsForValue().set(token,user.getAccountId());
+        stringRedisTemplate.opsForValue().set(token, user.getAccountId());
         return token;
     }
 
@@ -149,7 +150,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String updatePwdGetCode(String phone, String token) {
         String account_id = stringRedisTemplate.opsForValue().get(token);
-        if(account_id==null || account_id.equals("")){
+        if (account_id == null || account_id.equals("")) {
             throw new RuntimeException("请重新登录");
         }
         User user = userDao.findByAccountId(account_id);
@@ -172,14 +173,15 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 修改除头像的个人信息
+     *
      * @param user
      * @param token
      * @return
      */
     @Override
-    public Integer update(User user ,String token){
+    public Integer update(User user, String token) {
         String accountId = stringRedisTemplate.opsForValue().get(token);
-        if(accountId==null || accountId.equals("")){
+        if (accountId == null || accountId.equals("")) {
             throw new RuntimeException("请重新登录");
         }
         User user1 = userDao.findByAccountId(accountId);
@@ -188,15 +190,23 @@ public class UserServiceImpl implements UserService {
         return i;
     }
 
+
+    /**
+     * 修改密码
+     * @param code
+     * @param password
+     * @param token
+     * @return
+     */
     @Override
-    public Integer updatePwd(String code,String password,String token){
+    public Integer updatePwd(String code, String password, String token) {
         String mdCode = MD5Utils.md5(code + "abc");
         String phone = stringRedisTemplate.opsForValue().get(mdCode);
-        if(phone==null || phone.equals("")){
+        if (phone == null || phone.equals("")) {
             throw new RuntimeException("验证码失效，请重新获取");
         }
         String accountId = stringRedisTemplate.opsForValue().get(token);
-        if(accountId==null || accountId.equals("")){
+        if (accountId == null || accountId.equals("")) {
             throw new RuntimeException("请重新登录");
         }
         User user = userDao.findByAccountId(accountId);
@@ -205,4 +215,33 @@ public class UserServiceImpl implements UserService {
         return i;
     }
 
+
+    /**
+     * 修改头像
+     * @param file
+     * @param token
+     * @return
+     */
+    @Override
+    public Integer updateHeadImg(MultipartFile file, String token) {
+        if(file.isEmpty()){
+            throw new RuntimeException("请选择文件");
+        }
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid.toString().replace("-","");
+        String filePath = "/usr/local/tomcat/webapps/headImgs/";
+        File dest = new File(filePath + fileName + ".jpg");
+        try {
+            file.transferTo(dest);
+            String accountId = stringRedisTemplate.opsForValue().get(token);
+            User user = userDao.findByAccountId(accountId);
+            user.setHeadImg("http://47.240.68.134:8889/headImgs/"+fileName + ".jpg");
+            int i = userDao.updateByAccountId(user);
+            return i;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        throw new RuntimeException("上传失败");
+    }
 }

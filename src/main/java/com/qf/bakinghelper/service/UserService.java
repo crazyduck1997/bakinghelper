@@ -1,6 +1,8 @@
 package com.qf.bakinghelper.service;
 
 import com.qf.bakinghelper.entity.User;
+import org.springframework.web.multipart.MultipartFile;
+
 
 public interface UserService {
 
@@ -20,6 +22,8 @@ public interface UserService {
     public Integer update(User user ,String token);
 
     public Integer updatePwd(String code,String password,String token);
+
+    public Integer updateHeadImg(MultipartFile file, String token);
 
 
 }

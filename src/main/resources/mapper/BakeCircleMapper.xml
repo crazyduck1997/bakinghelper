@@ -8,6 +8,7 @@
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="resources" jdbcType="VARCHAR" property="resources" />
     <result column="praise" jdbcType="VARCHAR" property="praise" />
+    <result column="food_id" jdbcType="INTEGER" property="foodId"></result>
     <result column="comment_id" jdbcType="INTEGER" property="commentId" />
     <association property="user" column="user_id" javaType="com.qf.bakinghelper.entity.User">
       <id column="user_id" property="userId" jdbcType="INTEGER" />
@@ -32,6 +33,12 @@
       <id column="comment_id" jdbcType="INTEGER" property="commentId" />
       <result column="user_id" jdbcType="INTEGER" property="userId" />
       <result column="comment_time" jdbcType="DATE" property="commentTime" />
+      <result column="comment" jdbcType="VARCHAR" property="comment"/>
+    </association>
+    <association property="foodType" javaType="com.qf.bakinghelper.entity.FoodType">
+      <id column="d_id" property="dId" jdbcType="INTEGER" />
+      <result column="detail_name" property="detailName" jdbcType="VARCHAR" />
+      <result column="t_id" property="tId" jdbcType="INTEGER" />
     </association>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -40,10 +47,10 @@
   </delete>
   <insert id="insert" parameterType="com.qf.bakinghelper.entity.BakeCircle">
     insert into bake_circle (circle_id, user_id, time, 
-      description, resources, praise, 
+      description, resources, praise,food_id,
       comment_id)
     values (#{circleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{time,jdbcType=DATE}, 
-      #{description,jdbcType=VARCHAR}, #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR},#{footId,jdbcType=INTEGER},
       #{commentId,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.qf.bakinghelper.entity.BakeCircle">
@@ -65,11 +72,8 @@
     SELECT
     *
     FROM
-    bake_circle ,
-    `user` ,
-    `comment`
-    WHERE
-    bake_circle.user_id = `user`.user_id AND
-    bake_circle.comment_id = `comment`.comment_id order by time desc
+    bake_circle
+    left join `user` on bake_circle.user_id = `user`.user_id
+    left join `comment` on bake_circle.comment_id = `comment`.comment_id
   </select>
 </mapper>

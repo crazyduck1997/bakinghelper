@@ -8,13 +8,15 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.spring.web.json.Json;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Api(value = "用户")
 @CrossOrigin
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -72,11 +74,20 @@ public class UserController {
         return new JsonBean(1,"验证码已发送");
     }
 
-    @ApiOperation(value = "验证")
+    @ApiOperation(value = "修改密码,验证验证码")
     @PostMapping("/updatePwd.do")
     public JsonBean updatePwd(String code,String password,String token){
         Integer i = userService.updatePwd(code, password, token);
         return new JsonBean(i,"重置成功");
     }
+
+    @ApiOperation(value = "修改头像")
+    @PostMapping("/updateHeadImg.do")
+    public JsonBean updateHeadImg(MultipartFile file, String token){
+        Integer i = userService.updateHeadImg(file, token);
+        return new JsonBean(i,"上传成功");
+    }
+
+
 
 }

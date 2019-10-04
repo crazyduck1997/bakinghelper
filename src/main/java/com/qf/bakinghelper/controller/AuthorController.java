@@ -8,6 +8,6 @@ import org.springframework.stereotype.Controller;
 public class AuthorController {
 
     @Autowired
-    AuthorService authorServicea;
+    AuthorService authorService;
 
 }
