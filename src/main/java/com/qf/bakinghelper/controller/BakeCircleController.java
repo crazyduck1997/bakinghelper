@@ -2,9 +2,9 @@ package com.qf.bakinghelper.controller;
 
 import com.qf.bakinghelper.common.JsonBean;
 import com.qf.bakinghelper.entity.BakeCircle;
-import com.qf.bakinghelper.entity.FootType;
+import com.qf.bakinghelper.entity.FoodType;
 import com.qf.bakinghelper.service.BakeCircleService;
-import com.qf.bakinghelper.service.FootTypeService;
+import com.qf.bakinghelper.service.FoodTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class BakeCircleController {
     BakeCircleService bakeCircleService;
 
     @Autowired
-    FootTypeService footTypeService;
+    FoodTypeService foodTypeService;
 
     @ApiOperation(value = "",notes = "列出烘焙圈动态信息")
     @PostMapping("/list.do")
@@ -41,8 +41,8 @@ public class BakeCircleController {
     @ApiOperation(value = "",notes = "选择食物种类")
     @PostMapping("/listType.do")
     public JsonBean listType(){
-        List<FootType> footTypes = footTypeService.footTypeList();
-        return new JsonBean(1,footTypes);
+        List<FoodType> foodTypes = foodTypeService.foodTypeList();
+        return new JsonBean(1, foodTypes);
     }
 
     @ApiOperation(value = "烘焙圈对象",notes = "发表烘焙圈信息")

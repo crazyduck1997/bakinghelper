@@ -27,7 +27,7 @@ public class BakeCircle {
 
     private Comment comment;
 
-    private FootType footType;
+    private FoodType foodType;
 
 
 
