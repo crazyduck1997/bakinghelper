@@ -20,8 +20,7 @@ public class BakeCircleTest {
 
     @Test
     public void testList(){
-        List<BakeCircle> bakeCircles = BakeCircleDao.selectAll();
-
+        List<BakeCircle> all = BakeCircleDao.selectAll();
 
     }
 }

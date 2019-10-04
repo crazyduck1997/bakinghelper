@@ -27,7 +27,7 @@ public class BakeCircle {
 
     private User user;
 
-    private List<Comment> comments;
+    private Comment comment;
 
     private FoodType foodType;
 
