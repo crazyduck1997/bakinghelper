@@ -50,7 +50,7 @@
       description, resources, praise,food_id,
       comment_id)
     values (#{circleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{time,jdbcType=DATE}, 
-      #{description,jdbcType=VARCHAR}, #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR},#{footId,jdbcType=INTEGER},
+      #{description,jdbcType=VARCHAR}, #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR},#{foodId,jdbcType=INTEGER},
       #{commentId,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.qf.bakinghelper.entity.BakeCircle">

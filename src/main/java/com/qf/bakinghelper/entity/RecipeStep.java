@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class RecipeStep {
 
     private Integer stepId;
+    private String imgs;
     private String step;
     private Integer rId;
 

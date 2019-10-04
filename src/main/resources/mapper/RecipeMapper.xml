@@ -7,24 +7,27 @@
         <result column="title_img" jdbcType="VARCHAR" property="titleImg" />
         <result column="u_id" jdbcType="INTEGER" property="uId" />
         <result column="note" jdbcType="VARCHAR" property="note" />
+        <result column="create_time" property="createTime" />
         <result column="introduce" jdbcType="VARCHAR" property="introduce" />
-        <collection property="recipeImgsList" ofType="RecipeImgs">
-            <id column="img_id" jdbcType="INTEGER" property="imgId" />
-            <result column="imgs" jdbcType="VARCHAR" property="imgs" />
-            <result column="imgRid" jdbcType="INTEGER" property="rId" />
-        </collection>
+        <association property="user" javaType="User">
+            <id column="user_id" property="userId"/>
+            <result column="nickname" property="nickname"/>
+            <result column="head_img" property="headImg"/>
+        </association>
         <collection property="recipeStepList" ofType="RecipeStep">
-            <id column="step_id" property="stepId"></id>
-            <result column="step" property="step"></result>
-            <result column="stepRid" property="rId"></result>
+            <id column="step_id" jdbcType="INTEGER" property="stepId" />
+            <result column="imgs" jdbcType="VARCHAR" property="imgs" />
+            <result column="step" jdbcType="VARCHAR" property="step"/>
+            <result column="stepRid" jdbcType="INTEGER" property="rId" />
         </collection>
     </resultMap>
 
     <select id="findAllRecipe" resultMap="BaseResultMap" resultType="Recipe">
-        select r.r_id,r_name,title_img,u_id,note,introduce,img_id,imgs,i.r_id as imgRid,
-        step_id,step,s.r_id as stepRid
-        from recipe_imgs i right join recipe r on i.r_id = r.r_id
-        left join recipe_step s on s.r_id = r.r_id
+        select
+        r.r_id,r_name,title_img,u_id,note,r.introduce,create_time,
+        user_id,nickname,head_img,stepId,imgs,step,s.r_id as stepRid
+        from user right join recipe r on user_id = r.u_id
+        left join recipe_step s on r.r_id = s.r_id
 
     </select>
 
