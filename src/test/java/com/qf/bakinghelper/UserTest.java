@@ -1,7 +1,9 @@
 package com.qf.bakinghelper;
 
 import com.qf.bakinghelper.controller.UserController;
+import com.qf.bakinghelper.dao.RecipeDao;
 import com.qf.bakinghelper.dao.UserDao;
+import com.qf.bakinghelper.entity.Recipe;
 import com.qf.bakinghelper.entity.User;
 import com.qf.bakinghelper.service.UserService;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -20,6 +23,9 @@ public class UserTest {
 
     @Resource
     UserDao userDao;
+
+    @Resource
+    RecipeDao recipeDao;
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
@@ -36,6 +42,13 @@ public class UserTest {
     public void userTest(){
         User user = userDao.findByAccountId("31649c9d");
         System.out.println(user);
+    }
+
+    @Test
+    public void recipeTest(){
+        List<Recipe> list = recipeDao.findAllRecipe();
+        Recipe recipe = list.get(0);
+        System.out.println(recipe);
     }
 
 }

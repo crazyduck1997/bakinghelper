@@ -190,6 +190,14 @@ public class UserServiceImpl implements UserService {
         return i;
     }
 
+
+    /**
+     * 修改密码
+     * @param code
+     * @param password
+     * @param token
+     * @return
+     */
     @Override
     public Integer updatePwd(String code, String password, String token) {
         String mdCode = MD5Utils.md5(code + "abc");
@@ -207,6 +215,13 @@ public class UserServiceImpl implements UserService {
         return i;
     }
 
+
+    /**
+     * 修改头像
+     * @param file
+     * @param token
+     * @return
+     */
     @Override
     public Integer updateHeadImg(MultipartFile file, String token) {
         if(file.isEmpty()){

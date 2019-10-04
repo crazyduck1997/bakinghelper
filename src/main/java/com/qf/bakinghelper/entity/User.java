@@ -3,6 +3,9 @@ package com.qf.bakinghelper.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.List;
+
 @ApiModel(value = "用户")
 @Data
 public class User {
@@ -41,6 +44,9 @@ public class User {
     private String wechat;
     @ApiModelProperty(value = "密码")
     private String password;
+
+    @ApiModelProperty(value = "收藏的食单")
+    private List<CollectFoodOrder> collectFoodOrderList;
 
 
     }
