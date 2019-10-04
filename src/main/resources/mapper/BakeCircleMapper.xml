@@ -33,6 +33,11 @@
       <result column="user_id" jdbcType="INTEGER" property="userId" />
       <result column="comment_time" jdbcType="DATE" property="commentTime" />
     </association>
+    <association property="footType" javaType="com.qf.bakinghelper.entity.FootType">
+      <id column="d_id" property="dId" jdbcType="INTEGER" />
+      <result column="detail_name" property="detailName" jdbcType="VARCHAR" />
+      <result column="t_id" property="tId" jdbcType="INTEGER" />
+    </association>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from bake_circle
@@ -67,9 +72,12 @@
     FROM
     bake_circle ,
     `user` ,
-    `comment`
+    `comment`,
+    `food_type`
     WHERE
     bake_circle.user_id = `user`.user_id AND
-    bake_circle.comment_id = `comment`.comment_id order by time desc
+    bake_circle.comment_id = `comment`.comment_id AND
+    bake_circle.food_id = `food_type`.food_id
+    order by time desc
   </select>
 </mapper>

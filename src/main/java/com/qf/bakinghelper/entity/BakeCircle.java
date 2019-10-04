@@ -19,10 +19,16 @@ public class BakeCircle {
 
     private String praise;
 
+    private Integer foodId;
+
     private Integer commentId;
 
     private User user;
 
     private Comment comment;
+
+    private FootType footType;
+
+
 
 }
