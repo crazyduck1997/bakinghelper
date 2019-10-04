@@ -9,6 +9,7 @@ public class FootType {
     private Integer foodId;
     private String typeName;
     private Integer dId;
+    private String foodImg;
 
     public FootType() {
     }
@@ -17,5 +18,6 @@ public class FootType {
         this.foodId = foodId;
         this.typeName = typeName;
         this.dId = dId;
+        this.foodImg= foodImg;
     }
 }
