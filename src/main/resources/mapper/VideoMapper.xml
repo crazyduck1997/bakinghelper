@@ -66,4 +66,9 @@
         select * from video where video_id = #{id}
     </select>
 
+<!--  根据具体的食品查询视频-->
+  <select id="findByFootType" resultMap="BaseResultMap">
+        select * from video where video_name like '%${videoName}%'
+    </select>
+
 </mapper>

@@ -16,5 +16,10 @@
     </select>
 
 
+    <select id="footList" resultMap="BaseResultMap">
+        SELECT type_name from food_type
+    </select>
+
+
 
 </mapper>
