@@ -1,7 +1,11 @@
 package com.qf.bakinghelper.service;
 
+import com.qf.bakinghelper.entity.CollectFoodOrder;
+import com.qf.bakinghelper.entity.Recipe;
 import com.qf.bakinghelper.entity.User;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 public interface UserService {
@@ -24,6 +28,12 @@ public interface UserService {
     public Integer updatePwd(String code,String password,String token);
 
     public Integer updateHeadImg(MultipartFile file, String token);
+
+    public List<CollectFoodOrder> findMyFoodOrder(String token);
+
+    public List<Recipe> findRecipesByCid(Integer cid);
+
+    public void addFoodOrder(CollectFoodOrder collectFoodOrder,String token);
 
 
 }

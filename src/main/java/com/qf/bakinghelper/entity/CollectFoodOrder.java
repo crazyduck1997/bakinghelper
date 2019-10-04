@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,6 +15,7 @@ public class CollectFoodOrder {
     private String cName;
     private String cIntroduce;
     private Integer uId;
+
 
 
 

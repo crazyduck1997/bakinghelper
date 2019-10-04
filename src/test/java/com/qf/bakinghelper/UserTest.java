@@ -1,8 +1,10 @@
 package com.qf.bakinghelper;
 
 import com.qf.bakinghelper.controller.UserController;
+import com.qf.bakinghelper.dao.CollectFoodOrderDao;
 import com.qf.bakinghelper.dao.RecipeDao;
 import com.qf.bakinghelper.dao.UserDao;
+import com.qf.bakinghelper.entity.CollectFoodOrder;
 import com.qf.bakinghelper.entity.Recipe;
 import com.qf.bakinghelper.entity.User;
 import com.qf.bakinghelper.service.UserService;
@@ -27,6 +29,9 @@ public class UserTest {
     @Resource
     RecipeDao recipeDao;
 
+    @Resource
+    CollectFoodOrderDao collectFoodOrderDao;
+
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
@@ -49,6 +54,22 @@ public class UserTest {
         List<Recipe> list = recipeDao.findAllRecipe();
         Recipe recipe = list.get(0);
         System.out.println(recipe);
+    }
+
+    @Test
+    public void test(){
+        List<CollectFoodOrder> list = collectFoodOrderDao.findCollectByUid(1);
+        for(CollectFoodOrder c : list ){
+            System.out.println(c);
+        }
+    }
+
+    @Test
+    public void testFindBycId(){
+        List<Recipe> list = recipeDao.findRecipesByCollectId(1);
+        for(Recipe c : list ){
+            System.out.println(c);
+        }
     }
 
 }

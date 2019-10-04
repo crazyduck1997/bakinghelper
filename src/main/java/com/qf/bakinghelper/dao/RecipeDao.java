@@ -8,4 +8,6 @@ public interface RecipeDao {
 
     public List<Recipe> findAllRecipe();
 
+    public List<Recipe> findRecipesByCollectId(Integer cId);
+
 }

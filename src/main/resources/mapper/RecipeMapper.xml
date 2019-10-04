@@ -31,4 +31,11 @@
 
     </select>
 
+    <select id="findRecipesByCollectId" resultType="Recipe" resultMap="BaseResultMap">
+        select r_id,r_name,title_img
+        from recipe right join collect_recipe on r_id = recipe_id
+        left join collect_food_order on c_id = collect_id
+        where c_id = #{cId}
+    </select>
+
 </mapper>

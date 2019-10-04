@@ -1,16 +1,21 @@
 package com.qf.bakinghelper.controller;
 
 import com.qf.bakinghelper.common.JsonBean;
+import com.qf.bakinghelper.entity.CollectFoodOrder;
+import com.qf.bakinghelper.entity.Recipe;
 import com.qf.bakinghelper.entity.User;
 import com.qf.bakinghelper.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 @Api(value = "用户")
@@ -88,6 +93,26 @@ public class UserController {
         return new JsonBean(i,"上传成功");
     }
 
+    @ApiOperation(value = "查看我收藏的食单")
+    @PostMapping("/findMyFoodOrder.do")
+    public JsonBean findMyFoodOrder(String token){
+        List<CollectFoodOrder> list = userService.findMyFoodOrder(token);
+        return new JsonBean(1,list);
+    }
+
+    @ApiOperation(value = "查看收藏的食单中的食谱")
+    @PostMapping("/findRecipeByCid.do")
+    public JsonBean findRecipeByCid(@ApiParam(value = "当前食单的id") Integer cid){
+        List<Recipe> list = userService.findRecipesByCid(cid);
+        return new JsonBean(1,list);
+    }
+
+    @ApiOperation(value = "新建食单")
+    @PostMapping("/addFoodOrder.do")
+    public JsonBean addFoodOrder(CollectFoodOrder collectFoodOrder,String token){
+        userService.addFoodOrder(collectFoodOrder,token);
+        return new JsonBean(1,"success");
+    }
 
 
 }
