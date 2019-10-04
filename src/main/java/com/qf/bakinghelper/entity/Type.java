@@ -15,6 +15,8 @@ public class Type {
     private String typeName;
     @ApiModelProperty(value = "每种食品对应的视频")
     private List<Video> videos;
+    @ApiModelProperty(value = "每种食品对应的具体类型")
+    private List<Detail> details;
 
 
     public Type() {

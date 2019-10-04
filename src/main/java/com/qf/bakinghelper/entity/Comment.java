@@ -14,5 +14,7 @@ public class Comment {
 
     private Date commentTime;
 
+    private String content;
+
     private User user;
 }
