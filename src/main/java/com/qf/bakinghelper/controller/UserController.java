@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Api(value = "用户")
@@ -79,5 +80,14 @@ public class UserController {
         Integer i = userService.updatePwd(code, password, token);
         return new JsonBean(i,"重置成功");
     }
+
+    @ApiOperation(value = "修改头像")
+    @PostMapping("/updateHeadImg.do")
+    public JsonBean updateHeadImg(MultipartFile file, String token){
+        userService.updateHeadImg(file,token);
+        return null;
+    }
+
+
 
 }
