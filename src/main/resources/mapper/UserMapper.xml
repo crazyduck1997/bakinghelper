@@ -19,6 +19,12 @@
     <result column="qq" property="qq" jdbcType="VARCHAR" />
     <result column="wechat" property="wechat" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
+    <collection property="collectFoodOrderList" ofType="CollectFoodOrder">
+      <id property="cId" column="c_id"></id>
+      <result property="cName" column="c_name"></result>
+      <result property="cIntroduce" column="c_introduce"></result>
+      <result property="uId" column="u_id"></result>
+    </collection>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
@@ -93,26 +99,6 @@
      </trim>
     where account_id = #{accountId,jdbcType=VARCHAR}
   </update>
-  <!--<update id="updateByPrimaryKey" parameterType="User" >
-    update user
-    set account_id = #{accountId,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=VARCHAR},
-      head_img = #{headImg,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
-      introduce = #{introduce,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      banggong = #{banggong,jdbcType=INTEGER},
-      watch_num = #{watchNum,jdbcType=INTEGER},
-      fans_num = #{fansNum,jdbcType=INTEGER},
-      medal = #{medal,jdbcType=INTEGER},
-      grade = #{grade,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      qq = #{qq,jdbcType=VARCHAR},
-      wechat = #{wechat,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR}
-    where user_id = #{userId,jdbcType=INTEGER}
-  </update>-->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select user_id, account_id, sex, head_img, nickname, introduce, email, address, banggong,
     watch_num, fans_num, medal, grade, phone, qq, wechat, password

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.bakinghelper.dao.TechnologyDao">
+
+    <resultMap id="TechnologyMap" type="com.qf.bakinghelper.entity.Technology">
+        <id column="bake_id" jdbcType="INTEGER" property="bakeId" />
+        <result column="bake_name" jdbcType="VARCHAR" property="bakeName" />
+    </resultMap>
+
+
+    <resultMap id="techTotle" type="com.qf.bakinghelper.entity.TechTitle">
+        <id column="tech_id" jdbcType="INTEGER" property="techId" />
+        <result column="tech_name" jdbcType="VARCHAR" property="techName" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+        <result column="video_href" jdbcType="VARCHAR" property="videoHref" />
+        <result column="img_href" jdbcType="VARCHAR" property="imgHref" />
+    </resultMap>
+
+<!--    遍历技巧百科-->
+    <select id="findAllTech" resultMap="TechnologyMap">
+        select * from technology
+    </select>
+
+<!--    查询所有基础技巧、工具材料、进阶干货、精选专题信息-->
+    <select id="findSkillById" resultMap="techTotle">
+       select tech_title.* from tech_title where tech_title.bake_id = #{id}
+    </select>
+
+<!--    根据Id查询对应的话题内容-->
+    <select id="findOneById" resultMap="techTotle">
+        select * from tech_title where tech_id = #{id}
+    </select>
+
+</mapper>
