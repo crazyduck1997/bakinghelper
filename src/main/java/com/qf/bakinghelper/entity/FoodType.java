@@ -14,7 +14,7 @@ public class FoodType {
     public FoodType() {
     }
 
-    public FoodType(Integer foodId, String typeName, Integer dId) {
+    public FoodType(Integer foodId, String typeName, Integer dId,String foodImg) {
         this.foodId = foodId;
         this.typeName = typeName;
         this.dId = dId;
