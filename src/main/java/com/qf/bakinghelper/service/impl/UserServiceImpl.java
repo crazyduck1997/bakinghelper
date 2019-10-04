@@ -218,11 +218,15 @@ public class UserServiceImpl implements UserService {
         File dest = new File(filePath + fileName + ".jpg");
         try {
             file.transferTo(dest);
-
+            String accountId = stringRedisTemplate.opsForValue().get(token);
+            User user = userDao.findByAccountId(accountId);
+            user.setHeadImg("http://47.240.68.134:8889/headImgs/"+fileName + ".jpg");
+            int i = userDao.updateByAccountId(user);
+            return i;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return null;
+        throw new RuntimeException("上传失败");
     }
 }

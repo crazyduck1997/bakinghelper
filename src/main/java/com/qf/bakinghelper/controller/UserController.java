@@ -84,8 +84,8 @@ public class UserController {
     @ApiOperation(value = "修改头像")
     @PostMapping("/updateHeadImg.do")
     public JsonBean updateHeadImg(MultipartFile file, String token){
-        userService.updateHeadImg(file,token);
-        return null;
+        Integer i = userService.updateHeadImg(file, token);
+        return new JsonBean(i,"上传成功");
     }
 
 
