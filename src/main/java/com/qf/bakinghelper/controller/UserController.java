@@ -1,10 +1,9 @@
 package com.qf.bakinghelper.controller;
 
 import com.qf.bakinghelper.common.JsonBean;
-import com.qf.bakinghelper.entity.CollectFoodOrder;
-import com.qf.bakinghelper.entity.Recipe;
-import com.qf.bakinghelper.entity.User;
+import com.qf.bakinghelper.entity.*;
 import com.qf.bakinghelper.service.UserService;
+import com.qf.bakinghelper.service.VideoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -26,6 +25,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    VideoService videoService;
 
 
     @ApiOperation(value = "校验手机号并获取验证码",notes = "发送验证码")
@@ -112,6 +114,28 @@ public class UserController {
     public JsonBean addFoodOrder(CollectFoodOrder collectFoodOrder,String token){
         userService.addFoodOrder(collectFoodOrder,token);
         return new JsonBean(1,"success");
+    }
+
+    @ApiOperation(value = "查看我收藏的所有课程")
+    @PostMapping("/findAllCollectVideos.do")
+    public JsonBean findAllCollectVideos(String token){
+        List<Video> list = userService.findCollectVideos(token);
+        return new JsonBean(1,list);
+    }
+
+    @ApiOperation(value = "查看单个收藏课程的详细信息")
+    @PostMapping("/findOneCollectVideo.do")
+    public JsonBean findOneCollectVideo(Integer videoId){
+        Video video = videoService.findOneVideoMessageByVideoId(videoId);
+        return new JsonBean(1,video);
+    }
+
+    @ApiOperation(value = "查看我的勋章")
+    @PostMapping("/findMyMedals.do")
+    public JsonBean<List<Medal>> findMyMedals(String token){
+        System.out.println(token);
+        List<Medal> list = userService.findMyMedals(token);
+        return new JsonBean<>(1,list);
     }
 
 

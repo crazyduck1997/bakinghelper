@@ -26,6 +26,21 @@
       <result property="uId" column="u_id"></result>
     </collection>
   </resultMap>
+
+  <resultMap id="collectVideo" type="com.qf.bakinghelper.entity.Video">
+    <id column="video_id"  property="videoId" />
+    <result column="video_name" property="videoName" />
+    <result column="img_href" property="imgHref" />
+  </resultMap>
+
+  <resultMap id="userMedal" type="Medal">
+    <id column="id" property="id" />
+    <result column="medal_name" property="medalName"/>
+  </resultMap>
+
+
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
     where user_id = #{userId,jdbcType=INTEGER}
@@ -124,5 +139,20 @@
     from user
     where account_id = #{accountId}
   </select>
+
+  <select id="findCollectVideos" resultType="Video" resultMap="collectVideo">
+    select video_id,video_name,img_href
+     from video LEFT JOIN collect_videos on video_id = v_id
+    where u_id = #{userId}
+  </select>
+
+  <select id="findMyMedals" resultType="Medal" resultMap="userMedal">
+    select m.id,medal_name
+    from medal m left join user_medal on m.id = m_id
+    left join user on u_id = user_id
+    where user_id = #{userId}
+  </select>
+
+
 
 </mapper>

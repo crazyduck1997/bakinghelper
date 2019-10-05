@@ -5,9 +5,7 @@ import com.qf.bakinghelper.Utils.PhoneCode;
 import com.qf.bakinghelper.dao.CollectFoodOrderDao;
 import com.qf.bakinghelper.dao.RecipeDao;
 import com.qf.bakinghelper.dao.UserDao;
-import com.qf.bakinghelper.entity.CollectFoodOrder;
-import com.qf.bakinghelper.entity.Recipe;
-import com.qf.bakinghelper.entity.User;
+import com.qf.bakinghelper.entity.*;
 import com.qf.bakinghelper.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -140,14 +138,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User userInfo(String token) {
-        String accountId = stringRedisTemplate.opsForValue().get(token);
-        if (accountId == null || accountId.equals("")) {
-            throw new RuntimeException("请重新登录");
-        }
-        User user = userDao.findByAccountId(accountId);
-        if (user == null) {
-            throw new RuntimeException("请联系管理员");
-        }
+        User user = tokenToUser(token);
         return user;
     }
 
@@ -264,14 +255,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public List<CollectFoodOrder> findMyFoodOrder(String token) {
-        String accountId = stringRedisTemplate.opsForValue().get(token);
-        if(accountId==null || accountId.equals("")){
-            throw new RuntimeException("请重新登录");
-        }
-        User user = userDao.findByAccountId(accountId);
-        if(user==null){
-            throw new RuntimeException("请联系管理员");
-        }
+        User user = tokenToUser(token);
         List<CollectFoodOrder> list = collectFoodOrderDao.findCollectByUid(user.getUserId());
         return list;
     }
@@ -290,15 +274,39 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addFoodOrder(CollectFoodOrder collectFoodOrder,String token) {
+        User user = tokenToUser(token);
+        collectFoodOrder.setUId(user.getUserId());
+        collectFoodOrderDao.addFoodOrder(collectFoodOrder);
+    }
+
+    @Override
+    public List<Video> findCollectVideos(String token) {
         String accountId = stringRedisTemplate.opsForValue().get(token);
-        if(token==null || token.equals("")){
+        User user = userDao.findByAccountId(accountId);
+        System.out.println(user);
+        List<Video> list = userDao.findCollectVideos(user.getUserId());
+        return list;
+    }
+
+    @Override
+    public List<Medal> findMyMedals(String token) {
+        User user = tokenToUser(token);
+        List<Medal> list = userDao.findMyMedals(user.getUserId());
+        return list;
+    }
+
+
+    public User tokenToUser(String token){
+        String accountId = stringRedisTemplate.opsForValue().get(token);
+        if(accountId==null || accountId.equals("")){
             throw new RuntimeException("请重新登录");
         }
         User user = userDao.findByAccountId(accountId);
         if(user==null){
             throw new RuntimeException("请联系管理员");
         }
-        collectFoodOrder.setUId(user.getUserId());
-        collectFoodOrderDao.addFoodOrder(collectFoodOrder);
+        return user;
     }
+
+
 }

@@ -4,9 +4,7 @@ import com.qf.bakinghelper.controller.UserController;
 import com.qf.bakinghelper.dao.CollectFoodOrderDao;
 import com.qf.bakinghelper.dao.RecipeDao;
 import com.qf.bakinghelper.dao.UserDao;
-import com.qf.bakinghelper.entity.CollectFoodOrder;
-import com.qf.bakinghelper.entity.Recipe;
-import com.qf.bakinghelper.entity.User;
+import com.qf.bakinghelper.entity.*;
 import com.qf.bakinghelper.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,6 +68,20 @@ public class UserTest {
         for(Recipe c : list ){
             System.out.println(c);
         }
+    }
+
+    @Test
+    public void testCollectVideos(){
+        List<Video> list = userDao.findCollectVideos(1);
+        for(Video c : list ){
+            System.out.println(c);
+        }
+    }
+
+    @Test
+    public void testMyMedals(){
+        List<Medal> list = userDao.findMyMedals(1);
+        System.out.println(list);
     }
 
 }

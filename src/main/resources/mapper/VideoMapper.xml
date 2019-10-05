@@ -56,18 +56,18 @@
     from video
   </select>
 
-  <!--  查询推荐视频，在线学习人数为参考，选取数量最多的5位-->
-  <select id="findAllHotVideo" resultMap="BaseResultMap">
+<!--  查询推荐视频，在线学习人数为参考，选取数量最多的5位-->
+    <select id="findAllHotVideo" resultMap="BaseResultMap">
         select * from video order by cook_num desc limit 0,5
     </select>
 
-  <!--    查询单个视频的信息-->
-  <select id="findOneVideoMessageByVideoId" resultMap="BaseResultMap">
+<!--    查询单个视频的信息-->
+    <select id="findOneVideoMessageByVideoId" resultMap="BaseResultMap">
         select * from video where video_id = #{id}
     </select>
 
-  <!--  根据具体的食品查询视频-->
-  <select id="findByFoodType" resultMap="BaseResultMap">
+<!--  根据具体的食品查询视频-->
+  <select id="findByFootType" resultMap="BaseResultMap">
         select * from video where video_name like '%${videoName}%'
     </select>
 

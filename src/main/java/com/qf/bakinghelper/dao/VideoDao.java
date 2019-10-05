@@ -18,6 +18,6 @@ public interface VideoDao {
     //单个视频信息的查询
     Video findOneVideoMessageByVideoId(Integer videoId);
 
-    //    根据具体的食品查询视频
+//    根据具体的食品查询视频
     public List<Video> findByFoodType(String typeName);
 }

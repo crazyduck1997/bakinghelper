@@ -1,8 +1,6 @@
 package com.qf.bakinghelper.service;
 
-import com.qf.bakinghelper.entity.CollectFoodOrder;
-import com.qf.bakinghelper.entity.Recipe;
-import com.qf.bakinghelper.entity.User;
+import com.qf.bakinghelper.entity.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -34,6 +32,10 @@ public interface UserService {
     public List<Recipe> findRecipesByCid(Integer cid);
 
     public void addFoodOrder(CollectFoodOrder collectFoodOrder,String token);
+
+    public List<Video> findCollectVideos(String token);
+
+    public List<Medal> findMyMedals(String token);
 
 
 }
