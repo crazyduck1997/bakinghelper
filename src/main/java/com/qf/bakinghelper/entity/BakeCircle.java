@@ -21,13 +21,13 @@ public class BakeCircle {
 
     private String praise;
 
-    private Integer foodId;
+    private Integer topicId;
 
     private User user;
 
     private List<Comment> comments;
 
-    private FoodType foodType;
+    private Topic topic;
 
 
 

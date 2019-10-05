@@ -8,7 +8,7 @@
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="resources" jdbcType="VARCHAR" property="resources" />
     <result column="praise" jdbcType="VARCHAR" property="praise" />
-    <result column="food_id" jdbcType="INTEGER" property="foodId"/>
+    <result column="topic_id" jdbcType="INTEGER" property="topicId"/>
     <association property="user" javaType="com.qf.bakinghelper.entity.User">
       <id column="user_id" property="userId" jdbcType="INTEGER" />
       <result column="account_id" property="accountId" jdbcType="VARCHAR" />
@@ -28,10 +28,9 @@
       <result column="wechat" property="wechat" jdbcType="VARCHAR" />
       <result column="password" property="password" jdbcType="VARCHAR" />
     </association>
-    <association property="foodType" javaType="com.qf.bakinghelper.entity.FoodType">
-      <id column="d_id" property="dId" jdbcType="INTEGER" />
-      <result column="detail_name" property="detailName" jdbcType="VARCHAR" />
-      <result column="t_id" property="tId" jdbcType="INTEGER" />
+    <association property="topic" javaType="com.qf.bakinghelper.entity.Topic">
+      <id column="topic_id" jdbcType="INTEGER" property="topicId" />
+      <result column="topic_name" jdbcType="VARCHAR" property="topicName" />
     </association>
     <collection property="comments" ofType="com.qf.bakinghelper.entity.Comment">
       <id column="comment_id" jdbcType="INTEGER" property="commentId" />
@@ -47,10 +46,9 @@
   </delete>
   <insert id="insert" parameterType="com.qf.bakinghelper.entity.BakeCircle">
     insert into bake_circle (circle_id, user_id, time,
-      description, resources, praise,food_id,
-      comment_id)
+      description, resources, praise,topic_id)
     values (#{circleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{time,jdbcType=DATE}, 
-      #{description,jdbcType=VARCHAR}, #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR},#{foodId,jdbcType=INTEGER})
+      #{description,jdbcType=VARCHAR}, #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR},#{topicId,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.qf.bakinghelper.entity.BakeCircle">
     update bake_circle
@@ -72,11 +70,11 @@
     FROM
     bake_circle ,
     `comment` ,
-    food_type ,
+    topic ,
     `user`
     WHERE
     bake_circle.circle_id = `comment`.bake_circle_id AND
-    bake_circle.food_id = food_type.food_id AND
+    bake_circle.topic_id = topic.topic_id AND
     `comment`.user_id = `user`.user_id
     ORDER BY
     bake_circle.time DESC
