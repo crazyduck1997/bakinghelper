@@ -3,11 +3,9 @@ package com.qf.bakinghelper;
 import com.qf.bakinghelper.dao.VideoDao;
 import com.qf.bakinghelper.entity.*;
 import com.qf.bakinghelper.entity.Video;
-import com.qf.bakinghelper.service.AuthorService;
-import com.qf.bakinghelper.service.FeatureService;
-import com.qf.bakinghelper.service.TypeService;
-import com.qf.bakinghelper.service.VideoService;
+import com.qf.bakinghelper.service.*;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,9 @@ public class VideoTest {
     TypeService typeService;
     @Autowired
     AuthorService authorService;
+
+    @Autowired
+    FoodTypeService foodTypeService;
 
     @Test
     public void videoTest() {
@@ -84,4 +85,12 @@ public class VideoTest {
             Author author = authorService.findAuthorById(1);
             System.out.println(author);
         }
+
+
+        @Test
+        public void testFood(){
+            List<Detail> list = foodTypeService.foodTypeList(1);
+            System.out.println(list);
+        }
+
     }

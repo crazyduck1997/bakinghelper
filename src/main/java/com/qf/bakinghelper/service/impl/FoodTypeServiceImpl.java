@@ -2,6 +2,7 @@ package com.qf.bakinghelper.service.impl;
 
 import com.qf.bakinghelper.dao.FoodTypeDao;
 import com.qf.bakinghelper.dao.VideoDao;
+import com.qf.bakinghelper.entity.Detail;
 import com.qf.bakinghelper.entity.FoodType;
 import com.qf.bakinghelper.entity.Type;
 import com.qf.bakinghelper.entity.Video;
@@ -23,10 +24,11 @@ public class FoodTypeServiceImpl implements FoodTypeService {
 
     @Override
     //    根据具体的食品类型查询所有的食品
-    public Type foodTypeList(Integer typeId) {
-        Type list = foodTypeDao.foodTypeList(typeId);
-        return list;
+    public List<Detail> foodTypeList(Integer typeId) {
+        List<Detail> detailList = foodTypeDao.foodTypeList(typeId);
+        return detailList;
     }
+
 
     @Override
     //    根据具体的食品查询视频

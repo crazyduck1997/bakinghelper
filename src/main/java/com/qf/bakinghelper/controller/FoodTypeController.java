@@ -1,6 +1,7 @@
 package com.qf.bakinghelper.controller;
 
 import com.qf.bakinghelper.common.JsonBean;
+import com.qf.bakinghelper.entity.Detail;
 import com.qf.bakinghelper.entity.FoodType;
 import com.qf.bakinghelper.entity.Type;
 import com.qf.bakinghelper.entity.Video;
@@ -25,9 +26,9 @@ public class FoodTypeController {
 
     @ApiOperation(value = "食谱分类中通过食品来查收具体的食品类型和具体的食品")
     @PostMapping("/foodTypeList.do")
-    public JsonBean<Type> foodTypeList(Integer typeId){
-        Type type = foodTypeService.foodTypeList(typeId);
-        return new JsonBean(1, type);
+    public JsonBean<Detail> foodTypeList(Integer typeId){
+        List<Detail> detailsList = foodTypeService.foodTypeList(typeId);
+        return new JsonBean(1, detailsList);
     }
 
     @ApiOperation(value = "食谱分类中根据类型查找名字中含有此类型的视频")
