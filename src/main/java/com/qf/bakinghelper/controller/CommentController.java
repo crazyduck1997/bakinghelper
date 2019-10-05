@@ -23,7 +23,7 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
-    @PostMapping("/add")
+    @PostMapping("/add.do")
     @ApiOperation("添加评论(把content,bakeCircleId和token传来即可)")
     public JsonBean add(Comment comment,String token){
         commentService.insert(comment,token);

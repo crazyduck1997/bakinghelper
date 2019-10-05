@@ -65,7 +65,7 @@ public class VideoController {
         return new JsonBean(1,oneTypeVideos);
     }
     @ApiOperation(value = "根据单个视频的id查询该视频的详细信息")
-    @PostMapping("/findOneVideoMessageById")
+    @PostMapping("/findOneVideoMessageById.do")
     public JsonBean findOneVideoMessage(Integer videoId){
 
         Video oneVideoMessage = videoService.findOneVideoMessageByVideoId(videoId);
