@@ -35,7 +35,7 @@ public class BakeCircleServiceImpl implements BakeCircleService {
         String acountId = stringRedisTemplate.opsForValue().get(token);
         User user = userDao.findByAccountId(acountId);
         record.setUserId(user.getUserId());
-        record.setTime(new Date(System.currentTimeMillis()));
+        record.setTime(new Date());
         record.setPraise("0");
         return bakeCircleDao.insert(record);
     }

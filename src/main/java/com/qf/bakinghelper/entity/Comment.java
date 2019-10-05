@@ -12,6 +12,8 @@ public class Comment {
 
     private Integer userId;
 
+    private Integer bakeCircleId;
+
     private Date commentTime;
 
     private String content;

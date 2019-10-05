@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qf.bakinghelper.dao.FoodTypeDao" >
-    <resultMap id="BaseResultMap" type="com.qf.bakinghelper.entity.Detail" >
-        <id column="d_id" property="dId" jdbcType="INTEGER" />
-        <result column="detail_name" property="detailName" jdbcType="VARCHAR" />
-        <result column="t_id" property="tId" jdbcType="INTEGER" />
-        <collection property="foodTypes" ofType="com.qf.bakinghelper.entity.FoodType">
-            <id column="foot_id" property="footId" jdbcType="INTEGER" />
-            <result column="type_name" property="typeName" jdbcType="VARCHAR" />
-            <result column="d_id" property="dId" jdbcType="INTEGER" />
-            <result column="food_img" property="foodImg" jdbcType="VARCHAR"/>
+    <resultMap id="BaseResultMap" type="Type" >
+        <id column="type_id" property="typeId" jdbcType="INTEGER" />
+        <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+        <collection property="details" ofType="Detail">
+            <id column="d_id" property="dId" jdbcType="INTEGER" />
+            <result column="detail_name" property="detailName" jdbcType="VARCHAR" />
+            <result column="t_id" property="tId" jdbcType="INTEGER" />
+            <collection property="foodTypes" ofType="FoodType">
+                <id column="food_id" property="foodId" />
+                <result column="foodTypeName" property="typeName"></result>
+                <result column="foodDid" property="dId"/>
+                <result column="food_img" property="foodImg"/>
+            </collection>
         </collection>
     </resultMap>
-    <select id="foodTypeList" resultMap="BaseResultMap">
-        SELECT detail_name,type_name,food_img FROM type_detail LEFT JOIN food_type ON type_detail.d_id = food_type.d_id
+    <select id="foodTypeList" resultMap="BaseResultMap" resultType="Type">
+      select type_id,d.d_id ,detail_name,t_id,food_id,t.type_name as foodTypeName ,t.d_id as foodDid ,food_img
+      from type left join type_detail d on type_id = d.t_id
+      left join food_type t on d.d_id = t.d_id
+      where type_id = ${typeId}
     </select>
 
 

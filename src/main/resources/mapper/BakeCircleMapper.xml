@@ -8,9 +8,8 @@
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="resources" jdbcType="VARCHAR" property="resources" />
     <result column="praise" jdbcType="VARCHAR" property="praise" />
-    <result column="food_id" jdbcType="INTEGER" property="foodId"></result>
-    <result column="comment_id" jdbcType="INTEGER" property="commentId" />
-    <association property="user" column="user_id" javaType="com.qf.bakinghelper.entity.User">
+    <result column="food_id" jdbcType="INTEGER" property="foodId"/>
+    <association property="user" javaType="com.qf.bakinghelper.entity.User">
       <id column="user_id" property="userId" jdbcType="INTEGER" />
       <result column="account_id" property="accountId" jdbcType="VARCHAR" />
       <result column="sex" property="sex" jdbcType="VARCHAR" />
@@ -29,29 +28,29 @@
       <result column="wechat" property="wechat" jdbcType="VARCHAR" />
       <result column="password" property="password" jdbcType="VARCHAR" />
     </association>
-    <association property="comment" column="comment_id" javaType="com.qf.bakinghelper.entity.Comment">
-      <id column="comment_id" jdbcType="INTEGER" property="commentId" />
-      <result column="user_id" jdbcType="INTEGER" property="userId" />
-      <result column="comment_time" jdbcType="DATE" property="commentTime" />
-      <result column="comment" jdbcType="VARCHAR" property="comment"/>
-    </association>
     <association property="foodType" javaType="com.qf.bakinghelper.entity.FoodType">
       <id column="d_id" property="dId" jdbcType="INTEGER" />
       <result column="detail_name" property="detailName" jdbcType="VARCHAR" />
       <result column="t_id" property="tId" jdbcType="INTEGER" />
     </association>
+    <collection property="comments" ofType="com.qf.bakinghelper.entity.Comment">
+      <id column="comment_id" jdbcType="INTEGER" property="commentId" />
+      <result column="user_id" jdbcType="INTEGER" property="userId" />
+      <result column="bake_circle_id" jdbcType="INTEGER" property="bakeCircleId" />
+      <result column="comment_time" jdbcType="DATE" property="commentTime" />
+      <result column="comment" jdbcType="VARCHAR" property="comment"/>
+    </collection>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from bake_circle
     where circle_id = #{circleId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.qf.bakinghelper.entity.BakeCircle">
-    insert into bake_circle (circle_id, user_id, time, 
+    insert into bake_circle (circle_id, user_id, time,
       description, resources, praise,food_id,
       comment_id)
     values (#{circleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{time,jdbcType=DATE}, 
-      #{description,jdbcType=VARCHAR}, #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR},#{foodId,jdbcType=INTEGER},
-      #{commentId,jdbcType=INTEGER})
+      #{description,jdbcType=VARCHAR}, #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR},#{foodId,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.qf.bakinghelper.entity.BakeCircle">
     update bake_circle
@@ -59,12 +58,11 @@
       time = #{time,jdbcType=DATE},
       description = #{description,jdbcType=VARCHAR},
       resources = #{resources,jdbcType=VARCHAR},
-      praise = #{praise,jdbcType=VARCHAR},
-      comment_id = #{commentId,jdbcType=INTEGER}
+      praise = #{praise,jdbcType=VARCHAR}
     where circle_id = #{circleId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select circle_id, user_id, time, description, resources, praise, comment_id
+    select circle_id, user_id, time, description, resources, praise
     from bake_circle
     where circle_id = #{circleId,jdbcType=INTEGER}
   </select>
@@ -72,8 +70,15 @@
     SELECT
     *
     FROM
-    bake_circle
-    left join `user` on bake_circle.user_id = `user`.user_id
-    left join `comment` on bake_circle.comment_id = `comment`.comment_id
+    bake_circle ,
+    `comment` ,
+    food_type ,
+    `user`
+    WHERE
+    bake_circle.circle_id = `comment`.bake_circle_id AND
+    bake_circle.food_id = food_type.food_id AND
+    `comment`.user_id = `user`.user_id
+    ORDER BY
+    bake_circle.time DESC
   </select>
 </mapper>

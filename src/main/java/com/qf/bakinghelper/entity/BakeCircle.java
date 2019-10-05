@@ -23,13 +23,12 @@ public class BakeCircle {
 
     private Integer foodId;
 
-    private Integer commentId;
-
     private User user;
 
-    private Comment comment;
+    private List<Comment> comments;
 
     private FoodType foodType;
+
 
 
 

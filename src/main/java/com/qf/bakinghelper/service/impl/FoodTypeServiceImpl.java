@@ -3,6 +3,7 @@ package com.qf.bakinghelper.service.impl;
 import com.qf.bakinghelper.dao.FoodTypeDao;
 import com.qf.bakinghelper.dao.VideoDao;
 import com.qf.bakinghelper.entity.FoodType;
+import com.qf.bakinghelper.entity.Type;
 import com.qf.bakinghelper.entity.Video;
 import com.qf.bakinghelper.service.FoodTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,15 @@ public class FoodTypeServiceImpl implements FoodTypeService {
 
     @Override
     //    根据具体的食品类型查询所有的食品
-    public List<FoodType> foodTypeList() {
-        return foodTypeDao.foodTypeList();
+    public Type foodTypeList(Integer typeId) {
+        Type list = foodTypeDao.foodTypeList(typeId);
+        return list;
     }
 
     @Override
     //    根据具体的食品查询视频
     public List<Video> findFoodType(String typeName) {
-        return videoDao.findByFootType(typeName);
+        return videoDao.findByFoodType(typeName);
     }
 
     @Override

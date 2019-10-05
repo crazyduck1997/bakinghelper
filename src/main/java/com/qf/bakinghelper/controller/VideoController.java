@@ -40,7 +40,7 @@ public class VideoController {
         return new JsonBean(1,hotVideoList);
     }
 
-    @ApiOperation(value = "查询所有的专栏对应的视频")
+    @ApiOperation(value = "首页的视频(私房网红、应季必做)")
     @PostMapping("/findAllFeature.do")
     public JsonBean findAllFeature(){
         List<Feature> featureList = featureService.findAllFeature();

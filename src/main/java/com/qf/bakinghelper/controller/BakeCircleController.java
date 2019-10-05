@@ -28,8 +28,6 @@ public class BakeCircleController {
     @Autowired
     BakeCircleService bakeCircleService;
 
-    @Autowired
-    FoodTypeService foodTypeService;
 
     @ApiOperation(value = "",notes = "列出烘焙圈动态信息")
     @PostMapping("/list.do")
@@ -38,12 +36,6 @@ public class BakeCircleController {
         return new JsonBean(1,bakeCircles);
     }
 
-    @ApiOperation(value = "",notes = "选择食物种类")
-    @PostMapping("/listType.do")
-    public JsonBean listType(){
-        List<FoodType> foodTypes = foodTypeService.foodTypeList();
-        return new JsonBean(1, foodTypes);
-    }
 
     @ApiOperation(value = "烘焙圈对象",notes = "发表烘焙圈信息")
     @PostMapping("/add.do")

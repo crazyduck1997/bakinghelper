@@ -4,17 +4,18 @@
   <resultMap id="BaseResultMap" type="com.qf.bakinghelper.entity.Comment">
     <id column="comment_id" jdbcType="INTEGER" property="commentId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="bake_circle_id" jdbcType="INTEGER" property="bakeCircleId" />
     <result column="comment_time" jdbcType="DATE" property="commentTime" />
-    <result column="content" jdbcType="VARCHAR" property="content"></result>
+    <result column="content" jdbcType="VARCHAR" property="content"/>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from comment
     where comment_id = #{commentId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.qf.bakinghelper.entity.Comment">
-    insert into comment (comment_id, user_id, comment_time, content
+    insert into comment (comment_id, user_id, bake_circle_id, comment_time, content
       )
-    values (#{commentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{commentTime,jdbcType=DATE}, #{content,jdbcType=VARCHAR}
+    values (#{commentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{bakeCircleId,jdbcType=INTEGER}, #{commentTime,jdbcType=DATE}, #{content,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.qf.bakinghelper.entity.Comment">
@@ -30,7 +31,7 @@
     where comment_id = #{commentId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select comment_id, user_id, comment_time,content
+    select comment_id, user_id, bake_circle_id, comment_time,content
     from comment
   </select>
 </mapper>

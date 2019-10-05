@@ -7,7 +7,7 @@ import java.util.List;
 public interface CommentService {
     int deleteByPrimaryKey(Integer commentId);
 
-    int insert(Comment record);
+    int insert(Comment record,String token);
 
     Comment selectByPrimaryKey(Integer commentId);
 

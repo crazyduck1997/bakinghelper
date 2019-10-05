@@ -19,19 +19,14 @@ import java.util.List;
 @RestController
 public class CommentController {
 
+
     @Autowired
     CommentService commentService;
 
-    @PostMapping("/list")
-    @ApiOperation("列出评论信息")
-    public JsonBean list(String token){
-        List<Comment> comments = commentService.selectAll();
-        return new JsonBean(1,comments);
-    }
     @PostMapping("/add")
-    @ApiOperation("添加评论")
-    public JsonBean add(Comment comment){
-        commentService.insert(comment);
+    @ApiOperation("添加评论(把content,bakeCircleId和token传来即可)")
+    public JsonBean add(Comment comment,String token){
+        commentService.insert(comment,token);
         return new JsonBean(1,"评论成功");
     }
 }
