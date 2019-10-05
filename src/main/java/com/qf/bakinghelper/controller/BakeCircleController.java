@@ -3,8 +3,10 @@ package com.qf.bakinghelper.controller;
 import com.qf.bakinghelper.common.JsonBean;
 import com.qf.bakinghelper.entity.BakeCircle;
 import com.qf.bakinghelper.entity.FoodType;
+import com.qf.bakinghelper.entity.Topic;
 import com.qf.bakinghelper.service.BakeCircleService;
 import com.qf.bakinghelper.service.FoodTypeService;
+import com.qf.bakinghelper.service.TopicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class BakeCircleController {
     @Autowired
     BakeCircleService bakeCircleService;
 
+    @Autowired(required = false)
+    TopicService topicService;
+
 
     @ApiOperation(value = "",notes = "列出烘焙圈动态信息")
     @PostMapping("/list.do")
@@ -36,10 +41,17 @@ public class BakeCircleController {
         return new JsonBean(1,bakeCircles);
     }
 
+    @ApiOperation("列出所有topic")
+    @PostMapping("/listTopic.do")
+    public JsonBean listTopic(){
+        List<Topic> topics = topicService.selectAll();
+        return new JsonBean(1,topics);
+    }
+
 
     @ApiOperation(value = "烘焙圈对象",notes = "发表烘焙圈信息")
     @PostMapping("/add.do")
-    public JsonBean add(String description,Integer foodId,MultipartFile file,String token){
+    public JsonBean add(String description,Integer topicId,MultipartFile file,String token){
         if (file.isEmpty()) {
             return new JsonBean(0,"请选择文件");
         }
@@ -51,7 +63,7 @@ public class BakeCircleController {
             file.transferTo(dest);
             BakeCircle bakeCircle = new BakeCircle();
             bakeCircle.setDescription(description);
-            bakeCircle.setFoodId(foodId);
+            bakeCircle.setTopicId(topicId);
             bakeCircle.setResources("http://47.240.68.134:8889/bakecircle/"+fileName + ".jpg");
             bakeCircleService.insert(bakeCircle,token);
             return new JsonBean(1,"上传成功");
