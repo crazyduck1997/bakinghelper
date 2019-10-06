@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.bakinghelper.dao.AnswerDao">
+    <resultMap id="BaseResultMap" type="Answer">
+        <id column="a_id" jdbcType="INTEGER" property="aId" />
+        <result column="u_id" jdbcType="INTEGER" property="uId" />
+        <result column="a_content" property="aContent"/>
+        <result column="q_id" property="qId"/>
+        <result column="a_date" property="aDate"/>
+        <result column="a_praise" property="aPraise"/>
+        <association property="user" javaType="User">
+            <id column="user_id" property="userId"/>
+            <result column="nickname" property="nickname"/>
+            <result column="head_img" property="headImg"/>
+        </association>
+    </resultMap>
+
+    <insert id="addAnswer">
+        insert into answer (u_id,a_content,q_id,a_date)
+        values (#{uId},#{aContent},#{qId},#{aDate})
+    </insert>
+
+    <update id="updatePraiseNum">
+        update answer set a_praise = #{aPraise}
+        where a_id = #{aId}
+    </update>
+
+    <select id="findAnswersByQuestionId" resultType="Answer" resultMap="BaseResultMap">
+        select a_id,a_content,u_id,a_date,a_praise,user_id,nickname,head_img
+        from answer left join user on u_id = user_id
+        ORDER BY
+        a_date DESC
+    </select>
+
+    <select id="findAnswerByByPrimaryKey" resultType="Answer" resultMap="BaseResultMap">
+        select a_id,a_praise from answer where a_id = #{aId}
+    </select>
+
+
+</mapper>

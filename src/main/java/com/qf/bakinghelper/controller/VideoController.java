@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Api("视频")
+@Api(tags = "视频")
 @CrossOrigin
 @RestController
 public class VideoController {

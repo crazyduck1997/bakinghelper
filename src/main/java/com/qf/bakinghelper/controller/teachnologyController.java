@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Api(value = "技巧百科")
+@Api(tags = "技巧百科")
 @CrossOrigin
 @RestController
 public class teachnologyController {

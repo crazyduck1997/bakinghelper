@@ -2,12 +2,8 @@ package com.qf.bakinghelper.service.impl;
 
 import com.qf.bakinghelper.Utils.MD5Utils;
 import com.qf.bakinghelper.Utils.PhoneCode;
-import com.qf.bakinghelper.dao.BakeCircleDao;
-import com.qf.bakinghelper.dao.CollectFoodOrderDao;
-import com.qf.bakinghelper.dao.RecipeDao;
-import com.qf.bakinghelper.dao.UserDao;
+import com.qf.bakinghelper.dao.*;
 import com.qf.bakinghelper.entity.*;
-import com.qf.bakinghelper.service.BakeCircleService;
 import com.qf.bakinghelper.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +32,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     BakeCircleDao bakeCircleDao;
+
+    @Autowired
+    QuestionDao questionDao;
+
+    @Autowired
+    AnswerDao answerDao;
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
@@ -351,6 +354,109 @@ public class UserServiceImpl implements UserService {
         bakeCircle.setPraise(String.valueOf(Integer.parseInt(bakeCircle.getPraise())-1));
         int i = bakeCircleDao.updatePraiseByPrimaryKey(bakeCircle);
         return i;
+    }
+
+    /**
+     * 查看我的问答
+     * @param token
+     * @return
+     */
+    @Override
+    public List<Question> findMyQuestions(String token) {
+        User user = tokenToUser(token);
+        List<Question> list = questionDao.findMyQuestions(user.getUserId());
+        return list;
+    }
+
+    /**
+     * 给当前回答点赞
+     * @param aId
+     * @return
+     */
+    @Override
+    public Integer addAnswerPraiseNum(Integer aId) {
+        Answer answer = answerDao.findAnswerByByPrimaryKey(aId);
+        answer.setAPraise(answer.getAPraise()+1);
+        Integer integer = answerDao.updatePraiseNum(answer);
+        return integer;
+    }
+
+    /**
+     * 当前回答取消赞
+     * @param aId
+     * @return
+     */
+    @Override
+    public Integer answerPraiseNumRollBack(Integer aId) {
+        Answer answer = answerDao.findAnswerByByPrimaryKey(aId);
+        answer.setAPraise(answer.getAPraise()-1);
+        Integer integer = answerDao.updatePraiseNum(answer);
+        return integer;
+    }
+
+    /**
+     * 提出问题
+     * @param question
+     * @param file
+     * @param token
+     * @return
+     */
+    @Override
+    public Integer addQuestion(Question question,MultipartFile file, String token) {
+        User user = tokenToUser(token);
+        question.setUId(user.getUserId());
+        question.setAnswerNum(0);
+        question.setQTime(new Date());
+        if(file!=null){
+            UUID uuid = UUID.randomUUID();
+            String originalFilename = file.getOriginalFilename();
+            String fileName = uuid.toString().replace("-","");
+            String filePath = "/usr/local/tomcat/webapps/images/questionImgs/";
+            File dest = new File(filePath + fileName + originalFilename);
+            try {
+                file.transferTo(dest);
+                question.setQImg("http://47.240.68.134:8889/images/questionImgs/"+fileName + originalFilename);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Integer integer = questionDao.addQuestion(question);
+        return integer;
+    }
+
+    /**
+     * 添加回答
+     * @param token
+     * @param aContent
+     * @param qId
+     * @return
+     */
+    @Override
+    public Integer addAnswer(String token,String aContent, Integer qId) {
+        User user = tokenToUser(token);
+        Answer answer = new Answer();
+        answer.setAContent(aContent);
+        answer.setUId(user.getUserId());
+        answer.setQId(qId);
+        answer.setADate(new Date());
+        Integer integer = answerDao.addAnswer(answer);
+        Question question = questionDao.findQuestionByprimaryKey(qId);
+        System.out.println(question);
+        question.setAnswerNum(question.getAnswerNum()+1);
+        questionDao.updateAnswerNums(question);
+        return integer;
+    }
+
+
+    /**
+     * 删除我的问题
+     * @param qId
+     * @return
+     */
+    @Override
+    public Integer deleteQuestion(Integer qId) {
+        Integer integer = questionDao.deleteQuestion(qId);
+        return integer;
     }
 
 

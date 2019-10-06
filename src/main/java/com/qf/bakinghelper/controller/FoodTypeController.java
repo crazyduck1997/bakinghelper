@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 
-@Api("具体食品")
+@Api(tags = "食品相关")
 @CrossOrigin
 @RestController
 public class FoodTypeController {

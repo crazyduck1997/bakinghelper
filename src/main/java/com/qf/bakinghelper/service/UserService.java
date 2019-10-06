@@ -43,5 +43,16 @@ public interface UserService {
 
     public Integer pariseRollBack(Integer bakeCircleId);
 
+    public List<Question> findMyQuestions(String token);
+
+    public Integer addAnswerPraiseNum(Integer aId);
+
+    public Integer answerPraiseNumRollBack(Integer aId);
+
+    public Integer addQuestion(Question question,MultipartFile file, String token);
+
+    public Integer addAnswer(String token,String aContent,Integer qId);
+
+    public Integer deleteQuestion(Integer qId);
 
 }

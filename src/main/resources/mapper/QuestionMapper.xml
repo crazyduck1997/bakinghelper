@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.bakinghelper.dao.QuestionDao" >
+
+    <resultMap id="BaseResultMap" type="Question" >
+        <id column="q_id" property="qId" jdbcType="INTEGER" />
+        <result column="q_content" property="qContent" jdbcType="VARCHAR" />
+        <result column="u_id" property="uId" jdbcType="INTEGER" />
+        <result column="r_id" property="rId" jdbcType="INTEGER" />
+        <result column="q_time" property="qTime" />
+        <result column="q_img" property="qImg" />
+        <result column="answer_num" property="answerNum" jdbcType="INTEGER" />
+        <association property="recipe" javaType="Recipe">
+            <id column="r_id" property="rId"/>
+            <result column="r_name" property="rName"/>
+            <result column="title_img" property="titleImg"/>
+            <result column="recipe_u_id" property="uId"/>
+            <association property="user" javaType="User">
+                <id column="user_id" property="userId"></id>
+                <result column="nickname" property="nickname"/>
+            </association>
+        </association>
+    </resultMap>
+
+
+    <select id="findMyQuestions" resultMap="BaseResultMap" resultType="Question">
+        select q_id,q_content,q.u_id,r.r_id,q_time,q_img,answer_num,r_name,
+        title_img,r.u_id as recipe_u_id,user_id,nickname
+        from
+        question q left join recipe r on q.r_id = r.r_id
+        left join user on r.u_id = user_id
+        where q.u_id = #{userId}
+        ORDER BY
+        q_time DESC
+    </select>
+
+    <select id="findQuestionByprimaryKey" resultMap="BaseResultMap" resultType="Question">
+        select q_id,answer_num from question where q_id = #{qId}
+    </select>
+
+
+
+    <insert id="addQuestion" >
+        insert into question (u_id,q_content,r_id,q_time,q_img)
+        values (#{uId},#{qContent},#{rId},#{qTime},#{qImg})
+    </insert>
+
+    <delete id="deleteQuestion" >
+        delete
+        question,answer
+        from
+        question left join answer
+        on question.q_id = answer.q_id
+        where question.q_id = #{qId}
+    </delete>
+
+    <select id="findAllQuestions" resultType="Question" resultMap="BaseResultMap">
+        select q_id,q_content,q.u_id,r.r_id,q_time,q_img,answer_num,r_name,
+        title_img,r.u_id as recipe_u_id,user_id,nickname
+        from
+        question q left join recipe r on q.r_id = r.r_id
+        left join user on r.u_id = user_id
+        ORDER BY
+        q_time DESC
+    </select>
+
+    <update id="updateAnswerNums" >
+        update question
+        set answer_num = #{answerNum}
+        where q_id = #{qId}
+    </update>
+
+
+
+</mapper>

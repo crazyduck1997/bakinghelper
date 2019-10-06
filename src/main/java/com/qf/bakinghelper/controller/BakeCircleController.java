@@ -10,14 +10,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 
-@Api(value = "烘焙圈")
+@Api(tags = "烘焙圈")
 @CrossOrigin
 @RestController
 @RequestMapping("/bakecircle")
@@ -36,7 +32,7 @@ public class BakeCircleController {
     CommentService commentService;
 
 
-    @ApiOperation(value = "",notes = "列出烘焙圈动态信息")
+    @ApiOperation(value = "列出烘焙圈动态信息",notes = "列出烘焙圈动态信息")
     @PostMapping("/list.do")
     public JsonBean list(){
         List<BakeCircle> bakeCircles = bakeCircleService.selectAll();
