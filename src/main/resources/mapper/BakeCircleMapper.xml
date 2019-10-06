@@ -6,7 +6,7 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="time" jdbcType="DATE" property="time" />
     <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="circle_name" property="circleName"/>
+    <result column="circle_name" jdbcType="VARCHAR" property="circleName"/>
     <result column="resources" jdbcType="VARCHAR" property="resources" />
     <result column="praise" jdbcType="VARCHAR" property="praise" />
     <result column="topic_id" jdbcType="INTEGER" property="topicId"/>
@@ -39,9 +39,9 @@
     where circle_id = #{circleId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.qf.bakinghelper.entity.BakeCircle">
-    insert into bake_circle (circle_id, user_id,circle_name, time,
+    insert into bake_circle (user_id,circle_name, time,
       description, resources, praise,topic_id)
-    values (#{circleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},#{circleName} #{time,jdbcType=DATE},
+    values (#{userId,jdbcType=INTEGER},#{circleName,jdbcType=VARCHAR}, #{time,jdbcType=DATE},
       #{description,jdbcType=VARCHAR}, #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR},#{topicId,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.qf.bakinghelper.entity.BakeCircle">

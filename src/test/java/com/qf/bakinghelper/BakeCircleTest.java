@@ -31,4 +31,17 @@ public class BakeCircleTest {
         BakeCircle select = bakeCircleDao.selectByPrimaryKey(1);
         System.out.println(select);
     }
+    @Test
+    public void testAdd(){
+        BakeCircle bakeCircle = new BakeCircle();
+        bakeCircle.setDescription("123");
+        bakeCircle.setCircleName("哈哈哈");
+        bakeCircle.setPraise("0");
+        bakeCircle.setResources("www");
+        bakeCircle.setUserId(1);
+        bakeCircle.setTime(new Date());
+        bakeCircle.setTopicId(1);
+        bakeCircleDao.insert(bakeCircle);
+    }
+
 }

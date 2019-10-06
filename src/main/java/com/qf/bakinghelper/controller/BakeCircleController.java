@@ -60,7 +60,7 @@ public class BakeCircleController {
         String originalFilename = file.getOriginalFilename();
         UUID uuid = UUID.randomUUID();
         String fileName = uuid.toString().replace("-","");
-        String filePath = "/usr/local/tomcat/webapps/bakecircle/";
+        String filePath = "D:\\Drivers/";
         File dest = new File(filePath + fileName + originalFilename);
         try {
             file.transferTo(dest);
