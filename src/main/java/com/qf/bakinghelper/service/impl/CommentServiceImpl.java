@@ -1,7 +1,9 @@
 package com.qf.bakinghelper.service.impl;
 
+import com.qf.bakinghelper.dao.BakeCircleDao;
 import com.qf.bakinghelper.dao.CommentDao;
 import com.qf.bakinghelper.dao.UserDao;
+import com.qf.bakinghelper.entity.BakeCircle;
 import com.qf.bakinghelper.entity.Comment;
 import com.qf.bakinghelper.entity.User;
 import com.qf.bakinghelper.service.CommentService;
@@ -17,6 +19,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired(required = false)
     CommentDao commentDao;
+
+    @Autowired(required = false)
+    BakeCircleDao bakeCircleDao;
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
@@ -35,7 +40,12 @@ public class CommentServiceImpl implements CommentService {
         String accountId = stringRedisTemplate.opsForValue().get(token);
         User user = userDao.findByAccountId(accountId);
         record.setUId(user.getUserId());
-        return commentDao.insert(record);
+        int insert = commentDao.insert(record);
+        Integer bakeCircleId = record.getBakeCircleId();
+        BakeCircle bakeCircle = bakeCircleDao.selectByPrimaryKey(bakeCircleId);
+        bakeCircle.setCommentNum(bakeCircle.getCommentNum()+1);
+        bakeCircleDao.updateCommentNumByPrimaryKey(bakeCircle);
+        return insert;
     }
 
     @Override

@@ -2,9 +2,12 @@ package com.qf.bakinghelper.controller;
 
 import com.qf.bakinghelper.common.JsonBean;
 import com.qf.bakinghelper.entity.*;
+import com.qf.bakinghelper.service.BakeCircleService;
+import com.qf.bakinghelper.service.CommentService;
 import com.qf.bakinghelper.service.UserService;
 import com.qf.bakinghelper.service.VideoService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 
 @Api(value = "用户")
@@ -28,6 +34,19 @@ public class UserController {
 
     @Autowired
     VideoService videoService;
+
+    @Autowired
+    BakeCircleService bakeCircleService;
+
+    @Autowired
+    CommentService commentService;
+
+    @PostMapping("/add.do")
+    @ApiOperation("添加评论(把content,bakeCircleId和token传来即可)")
+    public JsonBean add(Comment comment,String token){
+        commentService.insert(comment,token);
+        return new JsonBean(1,"评论成功");
+    }
 
 
     @ApiOperation(value = "校验手机号并获取验证码",notes = "发送验证码")
@@ -136,6 +155,45 @@ public class UserController {
         System.out.println(token);
         List<Medal> list = userService.findMyMedals(token);
         return new JsonBean<>(1,list);
+    }
+
+    @ApiOperation(value = "给动态点赞")
+    @PostMapping("/getParise.do")
+    public JsonBean getParise(@ApiParam(value = "动态的id") Integer bakeCircleId){
+        Integer integer = userService.getParise(bakeCircleId);
+        return new JsonBean(integer,"点赞成功");
+    }
+
+    @ApiOperation(value = "动态取消赞")
+    @PostMapping("/pariseRollBack.do")
+    public JsonBean pariseRollBack(@ApiParam(value = "动态的id") Integer bakeCircleId){
+        Integer integer = userService.pariseRollBack(bakeCircleId);
+        return new JsonBean(integer,"取消成功");
+    }
+
+    @ApiOperation(value = "发表烘焙圈信息",notes = "发表烘焙圈信息")
+    @PostMapping("/addBakeCircle.do")
+    public JsonBean add(String description,Integer topicId,MultipartFile file,String token){
+        if (file.isEmpty()) {
+            return new JsonBean(0,"请选择文件");
+        }
+        String originalFilename = file.getOriginalFilename();
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid.toString().replace("-","");
+        String filePath = "D:\\Drivers/";
+        File dest = new File(filePath + fileName + originalFilename);
+        try {
+            file.transferTo(dest);
+            BakeCircle bakeCircle = new BakeCircle();
+            bakeCircle.setDescription(description);
+            bakeCircle.setTopicId(topicId);
+            bakeCircle.setResources("http://47.240.68.134:8889/bakecircle/"+fileName + originalFilename);
+            bakeCircleService.insert(bakeCircle,token);
+            return new JsonBean(1,"上传成功");
+        } catch (IOException e) {
+            e.getStackTrace();
+        }
+        return new JsonBean(0,"上传失败");
     }
 
 

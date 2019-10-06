@@ -16,6 +16,5 @@ public interface TypeDao {
 
     int updateByPrimaryKey(Type record);
 
-    //通过typeId查询单个食品类型对应的所有视频
-    public List<Video> findOneTypeVideosByTypeId(Integer typeId);
+
 }

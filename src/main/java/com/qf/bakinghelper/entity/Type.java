@@ -13,14 +13,15 @@ public class Type {
     private Integer typeId;
     @ApiModelProperty(value = "食品类型")
     private String typeName;
-    @ApiModelProperty(value = "每种食品对应的具体类型")
-    private List<Detail> details;
+    @ApiModelProperty(value = "每种食品对应的视频")
+    private List<Video> video;
 
     public Type() {
     }
 
-    public Type(Integer typeId, String typeName) {
+    public Type(Integer typeId, String typeName, List<Video> video) {
         this.typeId = typeId;
         this.typeName = typeName;
+        this.video = video;
     }
 }

@@ -51,30 +51,7 @@ public class BakeCircleController {
     }
 
 
-    @ApiOperation(value = "发表烘焙圈信息",notes = "发表烘焙圈信息")
-    @PostMapping("/add.do")
-    public JsonBean add(String description,Integer topicId,MultipartFile file,String token){
-        if (file.isEmpty()) {
-            return new JsonBean(0,"请选择文件");
-        }
-        String originalFilename = file.getOriginalFilename();
-        UUID uuid = UUID.randomUUID();
-        String fileName = uuid.toString().replace("-","");
-        String filePath = "D:\\Drivers/";
-        File dest = new File(filePath + fileName + originalFilename);
-        try {
-            file.transferTo(dest);
-            BakeCircle bakeCircle = new BakeCircle();
-            bakeCircle.setDescription(description);
-            bakeCircle.setTopicId(topicId);
-            bakeCircle.setResources("http://47.240.68.134:8889/bakecircle/"+fileName + originalFilename);
-            bakeCircleService.insert(bakeCircle,token);
-            return new JsonBean(1,"上传成功");
-        } catch (IOException e) {
-            e.getStackTrace();
-        }
-        return new JsonBean(0,"上传失败");
-    }
+
 
     @ApiOperation(value = "查看单个烘焙圈动态(不包括评论)",notes = "查看单个烘焙圈动态")
     @PostMapping("/findOneCircle.do")

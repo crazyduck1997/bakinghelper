@@ -39,5 +39,9 @@ public interface UserService {
 
     public User selectByPrimaryKey(Integer userId);
 
+    public Integer getParise(Integer bakeCricleId);
+
+    public Integer pariseRollBack(Integer bakeCircleId);
+
 
 }

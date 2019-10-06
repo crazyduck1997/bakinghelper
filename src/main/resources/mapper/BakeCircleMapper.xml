@@ -9,6 +9,7 @@
     <result column="circle_name" jdbcType="VARCHAR" property="circleName"/>
     <result column="resources" jdbcType="VARCHAR" property="resources" />
     <result column="praise" jdbcType="VARCHAR" property="praise" />
+    <result column="comment_num" property="commentNum"/>
     <result column="topic_id" jdbcType="INTEGER" property="topicId"/>
     <association property="user" javaType="com.qf.bakinghelper.entity.User">
       <id column="user_id" property="userId" jdbcType="INTEGER" />
@@ -44,21 +45,23 @@
     values (#{userId,jdbcType=INTEGER},#{circleName,jdbcType=VARCHAR}, #{time,jdbcType=DATE},
       #{description,jdbcType=VARCHAR}, #{resources,jdbcType=VARCHAR}, #{praise,jdbcType=VARCHAR},#{topicId,jdbcType=INTEGER})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.qf.bakinghelper.entity.BakeCircle">
+
+  <update id="updateCommentNumByPrimaryKey" parameterType="com.qf.bakinghelper.entity.BakeCircle">
     update bake_circle
-    set user_id = #{userId,jdbcType=INTEGER},
-      time = #{time,jdbcType=DATE},
-      description = #{description,jdbcType=VARCHAR},
-      resources = #{resources,jdbcType=VARCHAR},
-      praise = #{praise,jdbcType=VARCHAR}
+    set comment_num = #{commentNum}
+    where circle_id = #{circleId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updatePraiseByPrimaryKey" parameterType="com.qf.bakinghelper.entity.BakeCircle">
+    update bake_circle
+    set praise = #{praise}
     where circle_id = #{circleId,jdbcType=INTEGER}
   </update>
 
 
-
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT
-    nickname,head_img,time,circle_id,resources,topic_name,praise,circle_name,bake_circle.user_id
+    nickname,head_img,time,comment_num,circle_id,resources,topic_name,praise,circle_name,bake_circle.user_id
     FROM
     bake_circle ,
     topic ,
@@ -71,7 +74,7 @@
 
   <select id="selectAll" resultMap="BaseResultMap">
    SELECT
-    nickname,head_img,time,circle_id,resources,topic_name,praise,circle_name,bake_circle.user_id
+    nickname,head_img,time,circle_id,comment_num,resources,description,topic_name,praise,circle_name,bake_circle.user_id
     FROM
     bake_circle ,
     topic ,

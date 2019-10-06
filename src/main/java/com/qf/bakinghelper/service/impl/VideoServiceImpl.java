@@ -33,5 +33,9 @@ public class VideoServiceImpl implements VideoService {
         Video oneVideo = videoDao.findOneVideoMessageByVideoId(videoId);
         return oneVideo;
     }
-
+    @Override
+    public List<Video> findOneTypeVideosByTypeId(Integer typeId) {
+        List<Video> oneTypeVideos = videoDao.findOneTypeVideosByTypeId(typeId);
+        return oneTypeVideos;
+    }
 }

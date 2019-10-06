@@ -19,9 +19,5 @@ public class TypeServiceImpl implements TypeService {
         return types;
     }
 
-    @Override
-    public List<Video> findOneTypeVideosByTypeId(Integer typeId) {
-        List<Video> oneTypeVideos = typeDao.findOneTypeVideosByTypeId(typeId);
-        return oneTypeVideos;
-    }
+
 }

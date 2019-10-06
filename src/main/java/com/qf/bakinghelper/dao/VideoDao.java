@@ -20,4 +20,7 @@ public interface VideoDao {
 
 //    根据具体的食品查询视频
     public List<Video> findByFoodType(String typeName);
+
+    //通过typeId查询单个食品类型对应的所有视频
+    public List<Video> findOneTypeVideosByTypeId(Integer typeId);
 }

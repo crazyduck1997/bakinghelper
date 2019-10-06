@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="Author">
     <id column="author_id" jdbcType="INTEGER" property="authorId" />
     <result column="author_name" jdbcType="VARCHAR" property="authorName" />
+    <result column="author_img" property="authorImg"/>
     <result column="author_description" jdbcType="VARCHAR" property="authorDescription" />
     <collection property="videos" ofType="com.qf.bakinghelper.entity.Video">
       <id column="video_id" jdbcType="INTEGER" property="videoId" />

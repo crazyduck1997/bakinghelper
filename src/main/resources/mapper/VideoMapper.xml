@@ -14,36 +14,14 @@
     <result column="learn" jdbcType="VARCHAR" property="learn" />
     <result column="video_href" jdbcType="VARCHAR" property="videoHref" />
     <result column="img_href" jdbcType="VARCHAR" property="imgHref" />
+    <association property="author" javaType="Author">
+      <id column="author_id" property="authorId"/>
+      <result column="author_name" property="authorName"/>
+      <result column="author_img" property="authorImg"/>
+      <result column="author_description" property="authorDescription"/>
+    </association>
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from video
-    where video_id = #{videoId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="Video">
-    insert into video (video_id, video_name, author_id,feature_id,
-      collect_num, cook_num, type_id,
-      content, introduce, learn,
-      video_href, img_href)
-    values (#{videoId,jdbcType=INTEGER}, #{videoName,jdbcType=VARCHAR}, #{authorId,jdbcType=INTEGER},
-        #{featureId},#{collectNum,jdbcType=INTEGER}, #{cookNum,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER},
-      #{content,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, #{learn,jdbcType=VARCHAR},
-      #{videoHref,jdbcType=VARCHAR}, #{imgHref,jdbcType=VARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="Video">
-    update video
-    set video_name = #{videoName,jdbcType=VARCHAR},
-      author_id = #{authorId,jdbcType=INTEGER},
-      feature_id = #{featureId,jdbcType=INTEGER},
-      collect_num = #{collectNum,jdbcType=INTEGER},
-      cook_num = #{cookNum,jdbcType=INTEGER},
-      type_id = #{typeId,jdbcType=INTEGER},
-      content = #{content,jdbcType=VARCHAR},
-      introduce = #{introduce,jdbcType=VARCHAR},
-      learn = #{learn,jdbcType=VARCHAR},
-      video_href = #{videoHref,jdbcType=VARCHAR},
-      img_href = #{imgHref,jdbcType=VARCHAR}
-    where video_id = #{videoId,jdbcType=INTEGER}
-  </update>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select video_id, video_name, author_id,feature_id, collect_num, cook_num, type_id, content,
     introduce, learn, video_href, img_href
@@ -63,12 +41,23 @@
 
 <!--    查询单个视频的信息-->
     <select id="findOneVideoMessageByVideoId" resultMap="BaseResultMap">
-        select * from video where video_id = #{id}
+        select v.* , a.*
+        from video v left join author a
+        on v.author_id = a.author_id
+        where v.video_id = 1
     </select>
 
 <!--  根据具体的食品查询视频-->
-  <select id="findByFootType" resultMap="BaseResultMap">
+  <select id="findByFoodType" resultMap="BaseResultMap" resultType="Video">
         select * from video where video_name like '%${videoName}%'
     </select>
+
+  <!--  通过typeId查询单个种类对应的视频-->
+  <select id="findOneTypeVideosByTypeId" resultMap="BaseResultMap" resultType="Video">
+        select type.*,video.*
+            from type,video
+            where type.type_id = video.type_id
+            and type.type_id = #{id}
+  </select>
 
 </mapper>

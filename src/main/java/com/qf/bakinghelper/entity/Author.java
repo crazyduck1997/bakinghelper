@@ -16,6 +16,8 @@ public class Author {
     private String authorName;
     @ApiModelProperty(value = "作者描述")
     private String authorDescription;
+    @ApiModelProperty(value = "作者头像")
+    private String authorImg;
 
     @ApiModelProperty(value = "对应导师的所有视频")
     private List<Video> videos;
@@ -23,10 +25,11 @@ public class Author {
     public Author() {
     }
 
-    public Author(Integer authorId, String authorName, String authorDescription, List<Video> videos) {
+    public Author(Integer authorId, String authorName, String authorDescription, String authorImg, List<Video> videos) {
         this.authorId = authorId;
         this.authorName = authorName;
         this.authorDescription = authorDescription;
+        this.authorImg = authorImg;
         this.videos = videos;
     }
 }

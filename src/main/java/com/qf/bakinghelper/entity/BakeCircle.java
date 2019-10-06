@@ -25,6 +25,8 @@ public class BakeCircle {
 
     private Integer topicId;
 
+    private Integer commentNum;
+
     private User user;
 
     private List<Comment> comments;

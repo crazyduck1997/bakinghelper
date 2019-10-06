@@ -37,6 +37,10 @@ public class Video {
     @ApiModelProperty(value = "对应的技巧百科类型id")
     private Integer tyId;
 
+    //向阳
+    @ApiModelProperty(value = "视频作者")
+    public Author author;
+
     public Video() {
     }
 

@@ -58,13 +58,13 @@ public class VideoController {
         List<Type> typeList = typeService.selectAll();
         return new JsonBean(1,typeList);
     }
-    @ApiOperation(value = "查询单个食品的类别对应的视频")
+    @ApiOperation(value = "根据食品种类的id对应的视频")
     @PostMapping("/findOneTypeVideos.do")
     public JsonBean findOneType(Integer typeId){
-        List<Video> oneTypeVideos = typeService.findOneTypeVideosByTypeId(typeId);
+        List<Video> oneTypeVideos = videoService.findOneTypeVideosByTypeId(typeId);
         return new JsonBean(1,oneTypeVideos);
     }
-    @ApiOperation(value = "根据单个视频的id查询该视频的详细信息")
+    @ApiOperation(value = "根据视频的id查询该视频的详细信息")
     @PostMapping("/findOneVideoMessageById.do")
     public JsonBean findOneVideoMessage(Integer videoId){
 

@@ -69,7 +69,7 @@ public class VideoTest {
         @Test
         public void test4(){
         //查询单个type种类对应的所有视频
-            List<Video> typeVideosByTypeId = typeService.findOneTypeVideosByTypeId(1);
+            List<Video> typeVideosByTypeId = videoService.findOneTypeVideosByTypeId(1);
             System.out.println(typeVideosByTypeId);
         }
 
@@ -92,5 +92,12 @@ public class VideoTest {
             List<Detail> list = foodTypeService.foodTypeList(1);
             System.out.println(list);
         }
+
+    @Test
+    public void testFind(){
+        List<Video> list = foodTypeService.findFoodType("蛋糕");
+        System.out.println(list);
+    }
+
 
     }

@@ -12,4 +12,7 @@ public interface VideoService {
 
     //单个视频信息的查询
     Video findOneVideoMessageByVideoId(Integer videoId);
+
+    //通过typeId查询单个食品类型对应的所有视频
+    List<Video> findOneTypeVideosByTypeId(Integer typeId);
 }

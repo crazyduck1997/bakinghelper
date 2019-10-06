@@ -2,10 +2,12 @@ package com.qf.bakinghelper.service.impl;
 
 import com.qf.bakinghelper.Utils.MD5Utils;
 import com.qf.bakinghelper.Utils.PhoneCode;
+import com.qf.bakinghelper.dao.BakeCircleDao;
 import com.qf.bakinghelper.dao.CollectFoodOrderDao;
 import com.qf.bakinghelper.dao.RecipeDao;
 import com.qf.bakinghelper.dao.UserDao;
 import com.qf.bakinghelper.entity.*;
+import com.qf.bakinghelper.service.BakeCircleService;
 import com.qf.bakinghelper.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -30,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     RecipeDao recipeDao;
+
+    @Autowired
+    BakeCircleDao bakeCircleDao;
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
@@ -273,6 +278,11 @@ public class UserServiceImpl implements UserService {
         return list;
     }
 
+    /**
+     * 查看我收藏的食单
+     * @param collectFoodOrder
+     * @param token
+     */
     @Override
     public void addFoodOrder(CollectFoodOrder collectFoodOrder,String token) {
         User user = tokenToUser(token);
@@ -280,6 +290,11 @@ public class UserServiceImpl implements UserService {
         collectFoodOrderDao.addFoodOrder(collectFoodOrder);
     }
 
+    /**
+     * 查看我收藏的视频
+     * @param token
+     * @return
+     */
     @Override
     public List<Video> findCollectVideos(String token) {
         String accountId = stringRedisTemplate.opsForValue().get(token);
@@ -289,6 +304,11 @@ public class UserServiceImpl implements UserService {
         return list;
     }
 
+    /**
+     * 查看拥有的勋章
+     * @param token
+     * @return
+     */
     @Override
     public List<Medal> findMyMedals(String token) {
         User user = tokenToUser(token);
@@ -296,10 +316,41 @@ public class UserServiceImpl implements UserService {
         return list;
     }
 
+    /**
+     * 通过id查看用户信息
+     * @param uid
+     * @return
+     */
     @Override
     public User selectByPrimaryKey(Integer uid) {
         User user = userDao.selectByPrimaryKey(uid);
         return user;
+    }
+
+    /**
+     * 动态点赞
+     * @param bakeCircleId
+     * @return
+     */
+    @Override
+    public Integer getParise(Integer bakeCircleId) {
+        BakeCircle circle = bakeCircleDao.selectByPrimaryKey(bakeCircleId);
+        circle.setPraise(String.valueOf(Integer.parseInt(circle.getPraise())+1));
+        int i = bakeCircleDao.updatePraiseByPrimaryKey(circle);
+        return i;
+    }
+
+    /**
+     * 动态取消赞
+     * @param bakeCircleId
+     * @return
+     */
+    @Override
+    public Integer pariseRollBack(Integer bakeCircleId) {
+        BakeCircle bakeCircle = bakeCircleDao.selectByPrimaryKey(bakeCircleId);
+        bakeCircle.setPraise(String.valueOf(Integer.parseInt(bakeCircle.getPraise())-1));
+        int i = bakeCircleDao.updatePraiseByPrimaryKey(bakeCircle);
+        return i;
     }
 
 
@@ -314,6 +365,8 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+
 
 
 }

@@ -13,5 +13,7 @@ public interface BakeCircleDao {
 
     List<BakeCircle> selectAll();
 
-    int updateByPrimaryKey(BakeCircle record);
+    int updateCommentNumByPrimaryKey(BakeCircle record);
+
+    int updatePraiseByPrimaryKey(BakeCircle record);
 }
