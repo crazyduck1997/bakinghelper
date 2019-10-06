@@ -42,7 +42,8 @@ public class BakeCircleServiceImpl implements BakeCircleService {
 
     @Override
     public BakeCircle selectByPrimaryKey(Integer circleId) {
-        return null;
+        BakeCircle bakeCircle = bakeCircleDao.selectByPrimaryKey(circleId);
+        return bakeCircle;
     }
 
     @Override

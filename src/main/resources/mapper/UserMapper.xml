@@ -150,7 +150,7 @@
     select m.id,medal_name
     from medal m left join user_medal on m.id = m_id
     left join user on u_id = user_id
-    where user_id = #{userId}
+    where user_id = #{uid}
   </select>
 
 

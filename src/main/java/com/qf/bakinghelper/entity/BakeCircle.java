@@ -11,6 +11,8 @@ import java.util.List;
 public class BakeCircle {
     private Integer circleId;
 
+    private String circleName;
+
     private Integer userId;
 
     private Date time;

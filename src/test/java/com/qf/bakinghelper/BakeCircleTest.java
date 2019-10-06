@@ -16,11 +16,19 @@ import java.util.List;
 public class BakeCircleTest {
 
     @Autowired(required = false)
-    BakeCircleDao BakeCircleDao;
+    BakeCircleDao bakeCircleDao;
 
     @Test
     public void testList(){
-        List<BakeCircle> all = BakeCircleDao.selectAll();
+        List<BakeCircle> all = bakeCircleDao.selectAll();
+        for(BakeCircle b :all){
+            System.out.println(b);
+        }
 
+    }
+    @Test
+    public void testFindById(){
+        BakeCircle select = bakeCircleDao.selectByPrimaryKey(1);
+        System.out.println(select);
     }
 }

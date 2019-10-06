@@ -10,7 +10,7 @@ import java.util.Date;
 public class Comment {
     private Integer commentId;
 
-    private Integer userId;
+    private Integer uId;
 
     private Integer bakeCircleId;
 

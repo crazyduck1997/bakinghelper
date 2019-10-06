@@ -34,7 +34,7 @@ public class CommentServiceImpl implements CommentService {
         record.setCommentTime(new Date());
         String accountId = stringRedisTemplate.opsForValue().get(token);
         User user = userDao.findByAccountId(accountId);
-        record.setUserId(user.getUserId());
+        record.setUId(user.getUserId());
         return commentDao.insert(record);
     }
 
@@ -44,8 +44,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> selectAll() {
-        return commentDao.selectAll();
+    public List<Comment> selectAllByCircleId(Integer circleId) {
+        return commentDao.selectAllByCircleId(circleId);
     }
 
     @Override

@@ -29,4 +29,5 @@ public class CommentController {
         commentService.insert(comment,token);
         return new JsonBean(1,"评论成功");
     }
+
 }

@@ -11,7 +11,7 @@ public interface UserDao {
 
     int insert(User record);
 
-    User selectByPrimaryKey(Integer userId);
+    User selectByPrimaryKey(Integer uid);
 
     List<User> selectAll();
 

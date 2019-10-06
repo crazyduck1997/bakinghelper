@@ -24,13 +24,13 @@
         <result column="t_id" property="tId" jdbcType="INTEGER" />
         <collection property="foodTypes" ofType="FoodType">
             <id column="food_id" property="foodId" />
-            <result column="foodTypeName" property="typeName"></result>
+            <result column="type_name" property="typeName"></result>
             <result column="foodDid" property="dId"/>
             <result column="food_img" property="foodImg"/>
         </collection>
     </resultMap>
     <select id="foodTypeList" resultMap="BaseResultMap" resultType="Detail">
-      select d.d_id,detail_name,d.t_id,food_id,type_name,food_img
+      select d.d_id,detail_name,d.t_id,food_id,type_name ,food_img
     from type_detail d LEFT JOIN food_type f
     on d.d_id = f.d_id
     where d.t_id = #{typeId}

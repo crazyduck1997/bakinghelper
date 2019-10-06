@@ -11,7 +11,7 @@ public interface CommentService {
 
     Comment selectByPrimaryKey(Integer commentId);
 
-    List<Comment> selectAll();
+    List<Comment> selectAllByCircleId(Integer circle);
 
     int updateByPrimaryKey(Comment record);
 }

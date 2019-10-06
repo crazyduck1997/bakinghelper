@@ -230,14 +230,15 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("请选择文件");
         }
         UUID uuid = UUID.randomUUID();
+        String originalFilename = file.getOriginalFilename();
         String fileName = uuid.toString().replace("-","");
         String filePath = "/usr/local/tomcat/webapps/headImgs/";
-        File dest = new File(filePath + fileName + ".jpg");
+        File dest = new File(filePath + fileName + originalFilename);
         try {
             file.transferTo(dest);
             String accountId = stringRedisTemplate.opsForValue().get(token);
             User user = userDao.findByAccountId(accountId);
-            user.setHeadImg("http://47.240.68.134:8889/headImgs/"+fileName + ".jpg");
+            user.setHeadImg("http://47.240.68.134:8889/headImgs/"+fileName + originalFilename);
             int i = userDao.updateByAccountId(user);
             return i;
         } catch (IOException e) {
@@ -293,6 +294,12 @@ public class UserServiceImpl implements UserService {
         User user = tokenToUser(token);
         List<Medal> list = userDao.findMyMedals(user.getUserId());
         return list;
+    }
+
+    @Override
+    public User selectByPrimaryKey(Integer uid) {
+        User user = userDao.selectByPrimaryKey(uid);
+        return user;
     }
 
 

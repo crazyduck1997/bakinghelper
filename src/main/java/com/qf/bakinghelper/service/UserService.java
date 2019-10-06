@@ -37,5 +37,7 @@ public interface UserService {
 
     public List<Medal> findMyMedals(String token);
 
+    public User selectByPrimaryKey(Integer userId);
+
 
 }
