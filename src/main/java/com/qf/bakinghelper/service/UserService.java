@@ -54,12 +54,12 @@ public interface UserService {
 
     public Integer addAnswer(String token,String aContent,Integer qId);
 
-    public Integer deleteQuestion(Integer qId);
+    public Integer deleteQuestion(String token,Integer qId);
 
     public void addCollectVideos(String token, Integer videoId);
 
 
-    public void deleteCollectVideos(String token, ArrayList<Integer>  videosId);
+    public void deleteCollectVideos(String token, List<Integer> vIds);
 
 
 }

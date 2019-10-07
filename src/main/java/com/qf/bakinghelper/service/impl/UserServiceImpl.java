@@ -463,11 +463,13 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 删除我的问题
+     * @param token
      * @param qId
      * @return
      */
     @Override
-    public Integer deleteQuestion(Integer qId) {
+    public Integer deleteQuestion(String token,Integer qId) {
+        User user = tokenToUser(token);
         Integer integer = questionDao.deleteQuestion(qId);
         return integer;
     }
@@ -490,12 +492,12 @@ public class UserServiceImpl implements UserService {
     /**
      * 删除我收藏的视频
      * @param token
-     * @param videosId
+     * @param vIds
      */
     @Override
-    public void deleteCollectVideos(String token, ArrayList<Integer> videosId) {
+    public void deleteCollectVideos(String token, List<Integer> vIds) {
         User user = tokenToUser(token);
-        collectVideosDao.deleteCollectVideo(user.getUserId(),videosId);
+        collectVideosDao.deleteCollectVideo(user.getUserId(),vIds);
     }
 
 
