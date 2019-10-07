@@ -1,5 +1,6 @@
 package com.qf.bakinghelper.service.impl;
 
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.qf.bakinghelper.Utils.MD5Utils;
 import com.qf.bakinghelper.Utils.PhoneCode;
 import com.qf.bakinghelper.dao.*;
@@ -13,8 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -60,20 +59,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getCode(String phone) {
         User user = userDao.findByPhone(phone);
+        String message = "短信发送失败，但是，没关系，验证码是:";
         if (user != null) {
             throw new RuntimeException("手机号已注册");
         }
         PhoneCode.setNewcode();
         String code = String.valueOf(PhoneCode.getNewcode());
         try {
-            PhoneCode.sendSms(phone, code);
+            SendSmsResponse sendSmsResponse = PhoneCode.sendSms(phone, code);
+            if(sendSmsResponse.getCode()!= null && sendSmsResponse.getCode().equals("OK")){
+                message = "短信发送成功:";
+            }
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
         String mdCode = MD5Utils.md5(code + "abc");
         stringRedisTemplate.opsForValue().set(mdCode, phone);
         stringRedisTemplate.expire(mdCode, 5, TimeUnit.MINUTES);
-        return code;
+        return message+code;
     }
 
     /**
@@ -87,8 +90,13 @@ public class UserServiceImpl implements UserService {
     public String regist(String code, String password) {
         String mdCode = MD5Utils.md5(code + "abc");
         String phone = stringRedisTemplate.opsForValue().get(mdCode);
+        stringRedisTemplate.delete(mdCode);
         if (phone == null || phone.equals("")) {
             throw new RuntimeException("验证码错误，请重新获取");
+        }
+        User byPhone = userDao.findByPhone(phone);
+        if(byPhone!=null){
+            throw new RuntimeException("手机号已注册");
         }
         User user = new User();
         String uuid = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
@@ -101,9 +109,13 @@ public class UserServiceImpl implements UserService {
         user.setFansNum(0);
         user.setWatchNum(0);
         user.setGrade("1");
+        user.setHeadImg("http://47.240.68.134:8889/headImgs/03.jpg");
         user.setMedal(0);
         userDao.insert(user);
         String token = MD5Utils.getToken();
+        String mdAccountId = MD5Utils.md5(uuid + "abc");
+        stringRedisTemplate.opsForValue().set(mdAccountId,token);
+        stringRedisTemplate.expire(mdAccountId,14,TimeUnit.DAYS);
         stringRedisTemplate.opsForValue().set(token, user.getAccountId());
         stringRedisTemplate.expire(token,14,TimeUnit.DAYS);
         return token;
@@ -127,16 +139,24 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException("密码错误");
             }
             String newToken = MD5Utils.getToken();
+            String mdAccountId = MD5Utils.md5(user.getAccountId() + "abc");
+            String oldToken = stringRedisTemplate.opsForValue().get(mdAccountId);
+            stringRedisTemplate.delete(oldToken);
+            stringRedisTemplate.opsForValue().set(mdAccountId,newToken);
             stringRedisTemplate.opsForValue().set(newToken, user.getAccountId());
             stringRedisTemplate.expire(newToken,14,TimeUnit.DAYS);
+            stringRedisTemplate.expire(mdAccountId,14,TimeUnit.DAYS);
             return newToken;
         }
+        String newToken = MD5Utils.getToken();
         String accountId = stringRedisTemplate.opsForValue().get(token);
-        String token1 = MD5Utils.getToken();
-        stringRedisTemplate.opsForValue().set(token1,accountId);
-        stringRedisTemplate.expire(token1,14,TimeUnit.DAYS);
+        String mdAccountId = MD5Utils.md5(accountId + "abc");
         stringRedisTemplate.delete(token);
-        return token1;
+        stringRedisTemplate.opsForValue().set(mdAccountId,newToken);
+        stringRedisTemplate.opsForValue().set(newToken,accountId);
+        stringRedisTemplate.expire(newToken,14,TimeUnit.DAYS);
+        stringRedisTemplate.expire(mdAccountId,14,TimeUnit.DAYS);
+        return newToken;
     }
 
 
@@ -451,6 +471,7 @@ public class UserServiceImpl implements UserService {
         answer.setAContent(aContent);
         answer.setUId(user.getUserId());
         answer.setQId(qId);
+        answer.setAPraise(0);
         answer.setADate(new Date());
         Integer integer = answerDao.addAnswer(answer);
         Question question = questionDao.findQuestionByprimaryKey(qId);
