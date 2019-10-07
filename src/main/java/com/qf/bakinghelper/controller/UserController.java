@@ -15,8 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInput;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -233,16 +235,23 @@ public class UserController {
     @ApiOperation(value = "删除我的问题(会一并删除该问题的所有回答)")
     @PostMapping("/deleteQuestion.do")
     public JsonBean deleteQuestion(String token,Integer qId){
-        userService.deleteQuestion(qId);
+        userService.deleteQuestion(token,qId);
         return new JsonBean(1,"删除成功");
     }
 
     @ApiOperation(value = "删除我收藏的课程")
     @PostMapping("/deleteCollectVideos.do")
-    public JsonBean deleteCollectVideos(String token, ArrayList<Integer> videosId){
+    public JsonBean deleteCollectVideos(@RequestBody Map<String, Object> map){
+        String token = (String) map.get("token");
+        List<Integer> videosId = (List) map.get("videosId");
         userService.deleteCollectVideos(token,videosId);
         return new JsonBean(1,"删除成功");
     }
-
+    @ApiOperation(value = "收藏视频")
+    @PostMapping("/addCollectVideo.do")
+    public JsonBean addCollectVideo(String token,Integer videoId){
+        userService.addCollectVideos(token,videoId);
+        return new JsonBean(1,"收藏成功");
+    }
 
 }

@@ -15,6 +15,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -53,6 +54,17 @@ public class UserTest {
         Recipe recipe = list.get(0);
         System.out.println(recipe);
     }
+
+
+    @Test
+    public void deleteVideos(){
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        userService.deleteCollectVideos("123",list);
+    }
+
 
     @Test
     public void test(){
