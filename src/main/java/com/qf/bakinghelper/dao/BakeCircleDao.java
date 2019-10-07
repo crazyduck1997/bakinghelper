@@ -11,6 +11,8 @@ public interface BakeCircleDao {
 
     BakeCircle selectByPrimaryKey(Integer circleId);
 
+    List<BakeCircle> selectByTopicId(Integer topicId);
+
     List<BakeCircle> selectAll();
 
     int updateCommentNumByPrimaryKey(BakeCircle record);

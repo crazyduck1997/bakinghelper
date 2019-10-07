@@ -11,6 +11,8 @@ public interface BakeCircleService {
 
     BakeCircle selectByPrimaryKey(Integer circleId);
 
+    List<BakeCircle> selectByTopicId(Integer topicId);
+
     List<BakeCircle> selectAll();
 
     int updateByPrimaryKey(BakeCircle record);

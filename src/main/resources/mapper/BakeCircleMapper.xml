@@ -61,7 +61,7 @@
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT
-    nickname,head_img,time,comment_num,circle_id,resources,topic_name,praise,circle_name,bake_circle.user_id
+    nickname,head_img,time,comment_num,circle_id,resources,topic.topic_id,topic_name,praise,circle_name,bake_circle.user_id
     FROM
     bake_circle ,
     topic ,
@@ -70,11 +70,22 @@
     circle_id = #{circleId}
   </select>
 
+  <select id="selectByTopicId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    nickname,head_img,time,comment_num,circle_id,resources,topic.topic_id,topic_name,praise,circle_name,bake_circle.user_id
+    FROM
+    bake_circle ,
+    topic ,
+    `user`
+    WHERE
+    topic.topic_id = #{topicId}
+  </select>
+
 
 
   <select id="selectAll" resultMap="BaseResultMap">
    SELECT
-    nickname,head_img,time,circle_id,comment_num,resources,description,topic_name,praise,circle_name,bake_circle.user_id
+    nickname,head_img,time,circle_id,comment_num,resources,description,topic.topic_id,topic_name,praise,circle_name,bake_circle.user_id
     FROM
     bake_circle ,
     topic ,

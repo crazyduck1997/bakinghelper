@@ -43,5 +43,11 @@ public class BakeCircleTest {
         bakeCircle.setTopicId(1);
         bakeCircleDao.insert(bakeCircle);
     }
+    @Test
+    public void testFindByTopicId(){
+        List<BakeCircle> bakeCircles = bakeCircleDao.selectByTopicId(1);
+        System.out.println(bakeCircles);
+
+    }
 
 }

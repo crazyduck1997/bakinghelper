@@ -69,6 +69,12 @@ public class BakeCircleController {
         return new JsonBean(1,user);
     }
 
+    @ApiOperation(value = "通过topicId查看对应烘焙圈")
+    @PostMapping("/findByTopicId.do")
+    public JsonBean findByTopicId(Integer topicId){
+        List<BakeCircle> bakeCircles = bakeCircleService.selectByTopicId(topicId);
+        return new JsonBean(1,bakeCircles);
+    }
 
 
 

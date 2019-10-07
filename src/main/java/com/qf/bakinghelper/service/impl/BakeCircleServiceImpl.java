@@ -47,6 +47,11 @@ public class BakeCircleServiceImpl implements BakeCircleService {
     }
 
     @Override
+    public List<BakeCircle> selectByTopicId(Integer topicId) {
+        return bakeCircleDao.selectByTopicId(topicId);
+    }
+
+    @Override
     public List<BakeCircle> selectAll() {
         return bakeCircleDao.selectAll();
     }
