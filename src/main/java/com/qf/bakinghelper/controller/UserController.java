@@ -60,21 +60,11 @@ public class UserController {
     }
 
 
-    @ApiOperation(value = "手机号密码登录")
+    @ApiOperation(value = "手机号密码登录和免登录",notes = "根据传过来的token有无来判断")
     @PostMapping("/login.do")
-    public JsonBean login(String phone, String password) {
-        String token = userService.login(phone, password);
-        return new JsonBean(1, token);
-    }
-
-    @ApiOperation(value = "免登录，查看是否需要重新登录")
-    @PostMapping("/checkLogin.do")
-    public JsonBean checkLogin(String token){
-        if(token == null || token.equals("")){
-            return new JsonBean(0,"未登录,请重新登录");
-        }
-        String s = userService.checkLogin(token);
-        return new JsonBean(1,s);
+    public JsonBean login(String phone, String password,String token) {
+        String newToken = userService.login(phone, password,token);
+        return new JsonBean(1, newToken);
     }
 
 
@@ -240,7 +230,7 @@ public class UserController {
 
     @ApiOperation(value = "删除我的问题(会一并删除该问题的所有回答)")
     @PostMapping("/deleteQuestion.do")
-    public JsonBean deleteQuestion(Integer qId){
+    public JsonBean deleteQuestion(String token,Integer qId){
         userService.deleteQuestion(qId);
         return new JsonBean(1,"删除成功");
     }

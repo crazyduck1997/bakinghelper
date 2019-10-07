@@ -106,24 +106,32 @@ public class UserServiceImpl implements UserService {
 
 
     /**
-     * 手机号密码登录
+     * 手机号密码登录和免登录
      *
      * @param phone
      * @return
      */
     @Override
-    public String login(String phone, String password) {
-        User user = userDao.findByPhone(phone);
-        if (user == null) {
-            throw new RuntimeException("手机号错误");
+    public String login(String phone, String password,String token) {
+        if(token == null || token.equals("")){
+            User user = userDao.findByPhone(phone);
+            if (user == null) {
+                throw new RuntimeException("手机号错误");
+            }
+            if (!user.getPassword().equals(password)) {
+                throw new RuntimeException("密码错误");
+            }
+            String newToken = MD5Utils.getToken();
+            stringRedisTemplate.opsForValue().set(newToken, user.getAccountId());
+            stringRedisTemplate.expire(newToken,14,TimeUnit.DAYS);
+            return newToken;
         }
-        if (!user.getPassword().equals(password)) {
-            throw new RuntimeException("密码错误");
-        }
-        String token = MD5Utils.getToken();
-        stringRedisTemplate.opsForValue().set(token, user.getAccountId());
-        stringRedisTemplate.expire(token,14,TimeUnit.DAYS);
-        return token;
+        String accountId = stringRedisTemplate.opsForValue().get(token);
+        String token1 = MD5Utils.getToken();
+        stringRedisTemplate.opsForValue().set(token1,accountId);
+        stringRedisTemplate.expire(token1,14,TimeUnit.DAYS);
+        stringRedisTemplate.delete(token);
+        return token1;
     }
 
 
@@ -461,17 +469,7 @@ public class UserServiceImpl implements UserService {
         return integer;
     }
 
-    /**
-     * 免登录
-     * @param token
-     * @return
-     */
-    @Override
-    public String checkLogin(String token) {
-        tokenToUser(token);
-        stringRedisTemplate.expire(token,14,TimeUnit.DAYS);
-        return "已登录";
-    }
+
 
 
     public User tokenToUser(String token){

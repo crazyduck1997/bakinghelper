@@ -13,7 +13,7 @@ public interface UserService {
 
     public String regist(String code,String password);
 
-    public String login(String phone,String password);
+    public String login(String phone,String password,String token);
 
     public String loginOut(String token);
 
@@ -55,6 +55,6 @@ public interface UserService {
 
     public Integer deleteQuestion(Integer qId);
 
-    public String checkLogin(String token);
+
 
 }
