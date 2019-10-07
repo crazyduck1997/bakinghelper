@@ -8,7 +8,10 @@ import com.qf.bakinghelper.service.QuestionAndAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class QuestionAndAnswerServiceImpl implements QuestionAndAnswerService {
 
@@ -35,8 +38,12 @@ public class QuestionAndAnswerServiceImpl implements QuestionAndAnswerService {
      * @return
      */
     @Override
-    public List<Answer> findAnswersByQuestionId(Integer qId) {
+    public Map findOneQuestion(Integer qId) {
+        Question question = questionDao.findQuestionByprimaryKey(qId);
         List<Answer> list = answerDao.findAnswersByQuestionId(qId);
-        return list;
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("question",question);
+        map.put("answers",list);
+        return map;
     }
 }

@@ -55,4 +55,6 @@ public interface UserService {
 
     public Integer deleteQuestion(Integer qId);
 
+    public String checkLogin(String token);
+
 }

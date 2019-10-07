@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
         String mdCode = MD5Utils.md5(code + "abc");
         stringRedisTemplate.opsForValue().set(mdCode, phone);
         stringRedisTemplate.expire(mdCode, 5, TimeUnit.MINUTES);
-        return mdCode;
+        return code;
     }
 
     /**
@@ -100,6 +100,7 @@ public class UserServiceImpl implements UserService {
         userDao.insert(user);
         String token = MD5Utils.getToken();
         stringRedisTemplate.opsForValue().set(token, user.getAccountId());
+        stringRedisTemplate.expire(token,14,TimeUnit.DAYS);
         return token;
     }
 
@@ -121,6 +122,7 @@ public class UserServiceImpl implements UserService {
         }
         String token = MD5Utils.getToken();
         stringRedisTemplate.opsForValue().set(token, user.getAccountId());
+        stringRedisTemplate.expire(token,14,TimeUnit.DAYS);
         return token;
     }
 
@@ -177,7 +179,7 @@ public class UserServiceImpl implements UserService {
         String mdCode = MD5Utils.md5(code + "abc");
         stringRedisTemplate.opsForValue().set(mdCode, phone);
         stringRedisTemplate.expire(mdCode, 5, TimeUnit.MINUTES);
-        return mdCode;
+        return code;
     }
 
 
@@ -457,6 +459,18 @@ public class UserServiceImpl implements UserService {
     public Integer deleteQuestion(Integer qId) {
         Integer integer = questionDao.deleteQuestion(qId);
         return integer;
+    }
+
+    /**
+     * 免登录
+     * @param token
+     * @return
+     */
+    @Override
+    public String checkLogin(String token) {
+        tokenToUser(token);
+        stringRedisTemplate.expire(token,14,TimeUnit.DAYS);
+        return "已登录";
     }
 
 

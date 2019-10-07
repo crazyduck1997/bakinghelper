@@ -48,8 +48,8 @@ public class UserController {
     @ApiOperation(value = "校验手机号并获取验证码", notes = "发送验证码")
     @PostMapping("/getCode.do")
     public JsonBean<String> getCode(String phone) {
-        userService.getCode(phone);
-        return new JsonBean(1, "验证码已发送");
+        String code = userService.getCode(phone);
+        return new JsonBean(1, code);
     }
 
     @ApiOperation(value = "校验验证码,完成注册")
@@ -67,6 +67,16 @@ public class UserController {
         return new JsonBean(1, token);
     }
 
+    @ApiOperation(value = "免登录，查看是否需要重新登录")
+    @PostMapping("/checkLogin.do")
+    public JsonBean checkLogin(String token){
+        if(token == null || token.equals("")){
+            return new JsonBean(0,"未登录,请重新登录");
+        }
+        String s = userService.checkLogin(token);
+        return new JsonBean(1,s);
+    }
+
 
     @ApiOperation(value = "用户注销")
     @PostMapping("/loginOut.do")
@@ -82,9 +92,9 @@ public class UserController {
         return new JsonBean(1, user);
     }
 
-    @ApiOperation(value = "修改个人设置，除头像")
+    @ApiOperation(value = "修改个人设置，除头像",notes = "用户设置具体传要传什么看蓝湖")
     @PostMapping("/updateUser.do")
-    public JsonBean updateUser(User user, String token) {
+    public JsonBean updateUser(@ApiParam(value = "昵称，性别，简介，邮箱，收货地址中的任意，其他不传")User user, String token) {
         Integer integer = userService.update(user, token);
         return new JsonBean(integer, "修改成功");
     }
@@ -92,8 +102,8 @@ public class UserController {
     @ApiOperation(value = "修改密码，手机验证")
     @PostMapping("/updatePwdVerifyPhone.do")
     public JsonBean updatePwdVerifyPhone(String phone, String token) {
-        userService.updatePwdGetCode(phone, token);
-        return new JsonBean(1, "验证码已发送");
+        String code = userService.updatePwdGetCode(phone, token);
+        return new JsonBean(1, code);
     }
 
     @ApiOperation(value = "修改密码,验证验证码")

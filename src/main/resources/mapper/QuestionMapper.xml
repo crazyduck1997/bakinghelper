@@ -35,7 +35,12 @@
     </select>
 
     <select id="findQuestionByprimaryKey" resultMap="BaseResultMap" resultType="Question">
-        select q_id,answer_num from question where q_id = #{qId}
+        select q_id,q_content,q.u_id,r.r_id,q_time,q_img,answer_num,r_name,
+        title_img,r.u_id as recipe_u_id,user_id,nickname
+        from
+        question q left join recipe r on q.r_id = r.r_id
+        left join user on r.u_id = user_id
+        where q_id = #{qId}
     </select>
 
 

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Api(value = "问答", tags = "问答")
 @CrossOrigin
@@ -29,11 +31,11 @@ public class QuestionAndAnswerController {
         List<Question> list = questionAndAnswerService.findAllQuestions();
         return new JsonBean(1,list);
     }
-    @ApiOperation(value = "查看当前问题的所有回答")
-    @PostMapping("/findAllAnswers.do")
-    public JsonBean<List<Answer>> findAllAnswers(Integer qId){
-        List<Answer> list = questionAndAnswerService.findAnswersByQuestionId(qId);
-        return new JsonBean<>(1,list);
+    @ApiOperation(value = "查看当前问题以及当前问题的所有回答",notes = "返回map集合，map中question对应当前问题，answers对应当前问题的所有回答")
+    @PostMapping("/findOneQuestion.do")
+    public JsonBean findOneQuestion(Integer qId){
+        Map map = questionAndAnswerService.findOneQuestion(qId);
+        return new JsonBean(1,map);
     }
 
 
