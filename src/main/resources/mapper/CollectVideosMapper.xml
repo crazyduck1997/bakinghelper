@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.bakinghelper.dao.CollectVideosDao" >
+    <resultMap id="BaseResultMap" type="CollectVideos" >
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="u_id" property="uId" jdbcType="INTEGER"></result>
+        <result column="v_id" property="vId" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <insert id="insertCollectVideo">
+        insert into collect_videos (u_id,v_id)
+        values (#{uId},#{vId})
+    </insert>
+
+
+    <delete id="deleteCollectVideo">
+        delete from collect_videos where u_id = #{uId} and
+        v_id in
+        <foreach collection="list" open="(" close=")" separator="," item="vIds" >
+            #{vIds}
+        </foreach>
+    </delete>
+
+</mapper>

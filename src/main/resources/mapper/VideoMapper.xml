@@ -44,7 +44,7 @@
         select v.* , a.*
         from video v left join author a
         on v.author_id = a.author_id
-        where v.video_id = 1
+        where v.video_id = #{videoId}
     </select>
 
 <!--  根据具体的食品查询视频-->

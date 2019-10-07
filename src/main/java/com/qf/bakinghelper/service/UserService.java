@@ -3,6 +3,7 @@ package com.qf.bakinghelper.service;
 import com.qf.bakinghelper.entity.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -55,6 +56,10 @@ public interface UserService {
 
     public Integer deleteQuestion(Integer qId);
 
+    public void addCollectVideos(String token, Integer videoId);
+
+
+    public void deleteCollectVideos(String token, ArrayList<Integer>  videosId);
 
 
 }

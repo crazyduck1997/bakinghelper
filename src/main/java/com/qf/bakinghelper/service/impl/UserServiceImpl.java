@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -38,6 +40,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     AnswerDao answerDao;
+
+    @Autowired
+    CollectVideosDao collectVideosDao;
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
@@ -310,9 +315,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public List<Video> findCollectVideos(String token) {
-        String accountId = stringRedisTemplate.opsForValue().get(token);
-        User user = userDao.findByAccountId(accountId);
-        System.out.println(user);
+        User user = tokenToUser(token);
         List<Video> list = userDao.findCollectVideos(user.getUserId());
         return list;
     }
@@ -470,6 +473,30 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    /**
+     * 添加到收藏视频
+     * @param token
+     * @param videoId
+     */
+    @Override
+    public void addCollectVideos(String token, Integer videoId) {
+        User user = tokenToUser(token);
+        CollectVideos collectVideos = new CollectVideos();
+        collectVideos.setUId(user.getUserId());
+        collectVideos.setVId(videoId);
+        collectVideosDao.insertCollectVideo(collectVideos);
+    }
+
+    /**
+     * 删除我收藏的视频
+     * @param token
+     * @param videosId
+     */
+    @Override
+    public void deleteCollectVideos(String token, ArrayList<Integer> videosId) {
+        User user = tokenToUser(token);
+        collectVideosDao.deleteCollectVideo(user.getUserId(),videosId);
+    }
 
 
     public User tokenToUser(String token){

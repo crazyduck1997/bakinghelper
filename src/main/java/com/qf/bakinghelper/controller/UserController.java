@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -233,6 +234,13 @@ public class UserController {
     @PostMapping("/deleteQuestion.do")
     public JsonBean deleteQuestion(String token,Integer qId){
         userService.deleteQuestion(qId);
+        return new JsonBean(1,"删除成功");
+    }
+
+    @ApiOperation(value = "删除我收藏的课程")
+    @PostMapping("/deleteCollectVideos.do")
+    public JsonBean deleteCollectVideos(String token, ArrayList<Integer> videosId){
+        userService.deleteCollectVideos(token,videosId);
         return new JsonBean(1,"删除成功");
     }
 
