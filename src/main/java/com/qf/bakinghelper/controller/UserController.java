@@ -183,6 +183,7 @@ public class UserController {
             BakeCircle bakeCircle = new BakeCircle();
             bakeCircle.setDescription(description);
             bakeCircle.setTopicId(topicId);
+            bakeCircle.setCommentNum(0);
             bakeCircle.setResources("http://47.240.68.134:8889/bakecircle/" + fileName + originalFilename);
             bakeCircleService.insert(bakeCircle, token);
             return new JsonBean(1, "上传成功");
