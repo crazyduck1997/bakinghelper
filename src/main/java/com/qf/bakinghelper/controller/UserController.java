@@ -239,7 +239,7 @@ public class UserController {
         return new JsonBean(1,"删除成功");
     }
 
-    @ApiOperation(value = "删除我收藏的课程")
+    @ApiOperation(value = "删除我收藏的课程",notes = "json格式传token,键名token,和要删除的视频id的集合，键名videosId")
     @PostMapping("/deleteCollectVideos.do")
     public JsonBean deleteCollectVideos(@RequestBody Map<String, Object> map){
         String token = (String) map.get("token");
