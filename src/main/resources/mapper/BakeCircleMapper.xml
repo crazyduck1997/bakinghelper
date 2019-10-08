@@ -19,7 +19,6 @@
       <result column="nickname" property="nickname" jdbcType="VARCHAR" />
       <result column="introduce" property="introduce" jdbcType="VARCHAR" />
       <result column="email" property="email" jdbcType="VARCHAR" />
-      <result column="address" property="address" jdbcType="VARCHAR" />
       <result column="banggong" property="banggong" jdbcType="INTEGER" />
       <result column="watch_num" property="watchNum" jdbcType="INTEGER" />
       <result column="fans_num" property="fansNum" jdbcType="INTEGER" />

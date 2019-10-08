@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.bakinghelper.dao.AddressDao">
+    <resultMap id="BaseResultMap" type="Address">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="address_name" property="addressName" />
+        <result column="address_phone" property="addressPhone"/>
+        <result column="address_msg" property="addressMsg"/>
+        <result column="uid" property="uid"/>
+    </resultMap>
+
+
+    <update id="updateAddress">
+        update address set address_name = #{addressName},address_phone=#{addressPhone},
+        address_msg = #{addressMsg}
+        where uid = #{uid}
+    </update>
+
+    <insert id="addAddress">
+        insert into  address(address_name,address_phone,address_msg,uid)
+        values(#{addressName},#{addressPhone},#{addressMsg},#{uid})
+    </insert>
+
+
+
+</mapper>

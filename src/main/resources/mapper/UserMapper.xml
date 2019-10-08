@@ -9,16 +9,21 @@
     <result column="nickname" property="nickname" jdbcType="VARCHAR" />
     <result column="introduce" property="introduce" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="banggong" property="banggong" jdbcType="INTEGER" />
     <result column="watch_num" property="watchNum" jdbcType="INTEGER" />
     <result column="fans_num" property="fansNum" jdbcType="INTEGER" />
-    <result column="medal" property="medal" jdbcType="INTEGER" />
     <result column="grade" property="grade" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="qq" property="qq" jdbcType="VARCHAR" />
     <result column="wechat" property="wechat" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
+    <association property="address" javaType="Address">
+      <id column="id" property="id"/>
+      <result column="address_name" property="addressName"/>
+      <result column="address_phone" property="addressPhone"/>
+      <result column="address_msg" property="addressMsg"/>
+      <result column="uid" property="uid"/>
+    </association>
     <collection property="collectFoodOrderList" ofType="CollectFoodOrder">
       <id property="cId" column="c_id"></id>
       <result property="cName" column="c_name"></result>
@@ -45,17 +50,18 @@
     delete from user
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="User" >
     insert into user (user_id, account_id, sex,
       head_img, nickname, introduce,
-      email, address, banggong,
-      watch_num, fans_num, medal,
+      email,banggong,
+      watch_num, fans_num,
       grade, phone, qq, wechat,
       password)
     values (#{userId,jdbcType=INTEGER}, #{accountId,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
       #{headImg,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR},
-      #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{banggong,jdbcType=INTEGER},
-      #{watchNum,jdbcType=INTEGER}, #{fansNum,jdbcType=INTEGER}, #{medal,jdbcType=INTEGER},
+      #{email,jdbcType=VARCHAR},#{banggong,jdbcType=INTEGER},
+      #{watchNum,jdbcType=INTEGER}, #{fansNum,jdbcType=INTEGER},
       #{grade,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR},
       #{password,jdbcType=VARCHAR})
   </insert>
@@ -81,9 +87,6 @@
        <if test="email != null">
          email = #{email,jdbcType=VARCHAR},
        </if>
-       <if test="address != null">
-         address = #{address,jdbcType=VARCHAR},
-       </if>
        <if test="banggong != null">
          banggong = #{banggong,jdbcType=INTEGER},
        </if>
@@ -93,9 +96,6 @@
        <if test="fansNum != null">
          fans_num = #{fansNum,jdbcType=INTEGER},
        </if>
-       <if test="medal != null">
-         medal = #{medal,jdbcType=INTEGER},
-     </if>
        <if test="grade != null">
          grade = #{grade,jdbcType=VARCHAR},
        </if>
@@ -115,28 +115,31 @@
     where account_id = #{accountId,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select user_id, account_id, sex, head_img, nickname, introduce, email, address, banggong,
-    watch_num, fans_num, medal, grade, phone, qq, wechat, password
-    from user
+    select user_id, account_id, sex, head_img, nickname, introduce, email,banggong,
+    watch_num, fans_num,grade, phone, qq, wechat, password,address_name,address_phone,address_msg
+    from user left join address
+    on user_id = uid
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
+
   <select id="selectAll" resultMap="BaseResultMap" >
-    select user_id, account_id, sex, head_img, nickname, introduce, email, address, banggong,
-    watch_num, fans_num, medal, grade, phone, qq, wechat, password
+    select user_id, account_id, sex, head_img, nickname, introduce, email, banggong,
+    watch_num, fans_num, grade, phone, qq, wechat, password
     from user
   </select>
 
   <select id="findByPhone" resultType="User" resultMap="BaseResultMap">
-    select user_id, account_id, sex, head_img, nickname, introduce, email, address, banggong,
-    watch_num, fans_num, medal, grade, phone, qq, wechat, password
+    select user_id, account_id, sex, head_img, nickname, introduce, email,banggong,
+    watch_num, fans_num, grade, phone, qq, wechat, password
     from user
     where phone = #{phone}
   </select>
 
   <select id="findByAccountId" resultType="User" resultMap="BaseResultMap">
-    select user_id, account_id, sex, head_img, nickname, introduce, email, address, banggong,
-    watch_num, fans_num, medal, grade, phone, qq, wechat, password
-    from user
+    select user_id, account_id, sex, head_img, nickname, introduce, email,banggong,
+    watch_num, fans_num,grade, phone, qq, wechat, password,address_name,address_phone,address_msg
+    from user left join address
+    on user_id = uid
     where account_id = #{accountId}
   </select>
 

@@ -85,7 +85,7 @@ public class UserController {
         return new JsonBean(1, user);
     }
 
-    @ApiOperation(value = "修改个人设置，除头像",notes = "用户设置具体传要传什么看蓝湖")
+    @ApiOperation(value = "修改个人设置，除头像,地址",notes = "用户设置具体传要传什么看蓝湖")
     @PostMapping("/updateUser.do")
     public JsonBean updateUser(@ApiParam(value = "昵称，性别，简介，邮箱，收货地址中的任意，其他不传")User user, String token) {
         Integer integer = userService.update(user, token);
@@ -271,8 +271,21 @@ public class UserController {
     }
 
 
+    @ApiOperation(value = "添加我的地址")
+    @PostMapping("/addAddress.do")
+    public JsonBean addAddress(String token,Address address){
+        String info = userService.addAddress(token, address);
+        return new JsonBean(1,info);
+    }
 
 
+
+    @ApiOperation(value = "修改我的地址")
+    @PostMapping("/updateAddress.do")
+    public JsonBean updateAddress(String token,Address address){
+        String info = userService.updateAddress(token, address);
+        return new JsonBean(1,info);
+    }
 
 
 }

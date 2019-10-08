@@ -24,16 +24,12 @@ public class User {
     private String introduce;
     @ApiModelProperty(value = "邮箱")
     private String email;
-    @ApiModelProperty(value = "收货地址")
-    private String address;
     @ApiModelProperty(value = "帮贡")
     private Integer banggong;
     @ApiModelProperty(value = "关注人数")
     private Integer watchNum;
     @ApiModelProperty(value = "粉丝数")
     private Integer fansNum;
-    @ApiModelProperty(value = "勋章")
-    private Integer medal;
     @ApiModelProperty(value = "等级")
     private String grade;
     @ApiModelProperty(value = "手机")
@@ -47,6 +43,8 @@ public class User {
 
     @ApiModelProperty(value = "收藏的食单")
     private List<CollectFoodOrder> collectFoodOrderList;
+
+    public Address address;
 
 
     }

@@ -65,5 +65,10 @@ public interface UserService {
 
     public void deleteCollectRecipes(Map<String,Object> map);
 
+    public String addAddress(String token,Address address);
+
+    public String updateAddress(String token,Address address);
+
+
 
 }

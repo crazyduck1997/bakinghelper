@@ -36,6 +36,9 @@ public class UserServiceImpl implements UserService {
     CollectRecipeDao collectRecipeDao;
 
     @Autowired
+    AddressDao addressDao;
+
+    @Autowired
     BakeCircleDao bakeCircleDao;
 
     @Autowired
@@ -114,7 +117,6 @@ public class UserServiceImpl implements UserService {
         user.setWatchNum(0);
         user.setGrade("1");
         user.setHeadImg("http://47.240.68.134:8889/headImgs/03.jpg");
-        user.setMedal(0);
         userDao.insert(user);
         String token = MD5Utils.getToken();
         String mdAccountId = MD5Utils.md5(uuid + "abc");
@@ -551,6 +553,34 @@ public class UserServiceImpl implements UserService {
         List recipeIds = (List) map.get("recipeIds");
         tokenToUser(token);
         collectRecipeDao.deleteCollectRecipes(collectId,recipeIds);
+    }
+
+    /**
+     * 添加或修改我的地址
+     * @param token
+     * @param address
+     */
+    @Override
+    public String addAddress(String token, Address address) {
+        User user = tokenToUser(token);
+        address.setUid(user.getUserId());
+            addressDao.addAddress(address);
+            return "添加成功";
+
+    }
+
+    /**
+     * 修改我的地址
+     * @param token
+     * @param address
+     * @return
+     */
+    @Override
+    public String updateAddress(String token, Address address) {
+        User user = tokenToUser(token);
+        address.setUid(user.getUserId());
+        addressDao.updateAddress(address);
+        return "修改成功";
     }
 
 
