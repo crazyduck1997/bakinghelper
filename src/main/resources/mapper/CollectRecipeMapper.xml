@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.bakinghelper.dao.CollectRecipeDao" >
+    <resultMap id="BaseResultMap" type="CollectRecipe" >
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="collect_id" property="collectId" jdbcType="INTEGER"></result>
+        <result column="recipe_id" property="recipeId" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <insert id="insertCollectRecipe">
+        insert into collect_recipe (collect_id,recipe_id)
+        values (#{collectId},#{recipeId})
+    </insert>
+
+
+    <delete id="deleteCollectRecipes">
+        delete from collect_recipe where collect_id = #{collectId} and
+        recipe_id in
+        <foreach collection="list" open="(" close=")" separator="," item="recipeIds" >
+            #{recipeIds}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public interface UserService {
@@ -58,8 +59,11 @@ public interface UserService {
 
     public void addCollectVideos(String token, Integer videoId);
 
-
     public void deleteCollectVideos(String token, List<Integer> vIds);
+
+    public void addCollectRecipe(String token,Integer cId,Integer rId);
+
+    public void deleteCollectRecipes(Map<String,Object> map);
 
 
 }

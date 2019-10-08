@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +31,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     RecipeDao recipeDao;
+
+    @Autowired
+    CollectRecipeDao collectRecipeDao;
 
     @Autowired
     BakeCircleDao bakeCircleDao;
@@ -519,6 +523,34 @@ public class UserServiceImpl implements UserService {
     public void deleteCollectVideos(String token, List<Integer> vIds) {
         User user = tokenToUser(token);
         collectVideosDao.deleteCollectVideo(user.getUserId(),vIds);
+    }
+
+    /**
+     * 添加食谱到我的食单
+     * @param token
+     * @param cId
+     * @param rId
+     */
+    @Override
+    public void addCollectRecipe(String token, Integer cId,Integer rId) {
+        tokenToUser(token);
+        CollectRecipe recipe = new CollectRecipe();
+        recipe.setCollectId(cId);
+        recipe.setRecipeId(rId);
+        collectRecipeDao.insertCollectRecipe(recipe);
+    }
+
+    /**
+     * 批量删除我收藏的食谱
+     * @param map
+     */
+    @Override
+    public void deleteCollectRecipes(Map<String,Object> map) {
+        String  token =(String) map.get("token");
+        Integer collectId = (Integer)map.get("collectId");
+        List recipeIds = (List) map.get("recipeIds");
+        tokenToUser(token);
+        collectRecipeDao.deleteCollectRecipes(collectId,recipeIds);
     }
 
 

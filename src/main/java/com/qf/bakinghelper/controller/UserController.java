@@ -247,11 +247,32 @@ public class UserController {
         userService.deleteCollectVideos(token,videosId);
         return new JsonBean(1,"删除成功");
     }
+
     @ApiOperation(value = "收藏视频")
     @PostMapping("/addCollectVideo.do")
     public JsonBean addCollectVideo(String token,Integer videoId){
         userService.addCollectVideos(token,videoId);
         return new JsonBean(1,"收藏成功");
     }
+
+
+    @ApiOperation(value = "收藏食谱")
+    @PostMapping("/addCollectRecipe.do")
+    public JsonBean addCollectRecipe(String token,Integer collectId,Integer recipeId){
+        userService.addCollectRecipe(token, collectId, recipeId);
+        return new JsonBean(1,"收藏成功");
+    }
+
+    @ApiOperation(value = "删除我收藏的食谱",notes = "map中需要token,collectId食单id,recipeIds食谱id的list集合")
+    @PostMapping("/deleteCollectRecipes.do")
+    public JsonBean deleteCollectRecipes(@RequestBody Map<String,Object> map){
+        userService.deleteCollectRecipes(map);
+        return new JsonBean(1,"删除成功");
+    }
+
+
+
+
+
 
 }
