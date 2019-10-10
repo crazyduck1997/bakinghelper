@@ -271,21 +271,13 @@ public class UserController {
     }
 
 
-    @ApiOperation(value = "添加我的地址")
-    @PostMapping("/addAddress.do")
-    public JsonBean addAddress(String token,Address address){
-        String info = userService.addAddress(token, address);
+    @ApiOperation(value = "添加或修改我的地址",notes = "添加无需传uid")
+    @PostMapping("/addOrUpdateAddress.do")
+    public JsonBean addOrUpdateAddress(String token,Address address){
+        String info = userService.addOrUpdateAddress(token, address);
         return new JsonBean(1,info);
     }
 
-
-
-    @ApiOperation(value = "修改我的地址")
-    @PostMapping("/updateAddress.do")
-    public JsonBean updateAddress(String token,Address address){
-        String info = userService.updateAddress(token, address);
-        return new JsonBean(1,info);
-    }
 
 
 }

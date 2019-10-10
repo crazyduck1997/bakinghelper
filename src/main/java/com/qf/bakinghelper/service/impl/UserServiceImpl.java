@@ -561,26 +561,17 @@ public class UserServiceImpl implements UserService {
      * @param address
      */
     @Override
-    public String addAddress(String token, Address address) {
+    public String addOrUpdateAddress(String token, Address address) {
         User user = tokenToUser(token);
-        address.setUid(user.getUserId());
+        if(address.getUid()==null || address.getUid() == 0){
+            address.setUid(user.getUserId());
             addressDao.addAddress(address);
             return "添加成功";
-
-    }
-
-    /**
-     * 修改我的地址
-     * @param token
-     * @param address
-     * @return
-     */
-    @Override
-    public String updateAddress(String token, Address address) {
-        User user = tokenToUser(token);
+        }
         address.setUid(user.getUserId());
         addressDao.updateAddress(address);
         return "修改成功";
+
     }
 
 
