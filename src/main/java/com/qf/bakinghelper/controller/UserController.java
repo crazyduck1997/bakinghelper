@@ -42,8 +42,8 @@ public class UserController {
 
     @PostMapping("/add.do")
     @ApiOperation("添加评论(把content,bakeCircleId和token传来即可)")
-    public JsonBean add(Comment comment, String token) {
-        commentService.insert(comment, token);
+    public JsonBean add(@RequestBody Map<String,Object> map) {
+        commentService.insert(map);
         return new JsonBean(1, "评论成功");
     }
 
@@ -87,7 +87,7 @@ public class UserController {
 
     @ApiOperation(value = "修改个人设置，除头像,地址",notes = "用户设置具体传要传什么看蓝湖")
     @PostMapping("/updateUser.do")
-    public JsonBean updateUser(@ApiParam(value = "昵称，性别，简介，邮箱，收货地址中的任意，其他不传")User user, String token) {
+    public JsonBean updateUser(@ApiParam(value = "昵称，性别，简介，邮箱，其他不传")User user, String token) {
         Integer integer = userService.update(user, token);
         return new JsonBean(integer, "修改成功");
     }
@@ -172,7 +172,7 @@ public class UserController {
 
     @ApiOperation(value = "发表烘焙圈信息", notes = "发表烘焙圈信息")
     @PostMapping("/addBakeCircle.do")
-    public JsonBean add(@ApiParam(value = "烘焙圈动态的文字")String description, Integer topicId, MultipartFile file, String token) {
+    public JsonBean addBakeCircle(@ApiParam(value = "烘焙圈动态的文字")String description, Integer topicId, MultipartFile file, String token) {
         if (file.isEmpty()) {
             return new JsonBean(0, "请选择文件");
         }

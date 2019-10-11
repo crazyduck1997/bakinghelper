@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -35,14 +36,20 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public int insert(Comment record,String token) {
-        record.setCommentTime(new Date());
+    public int insert(Map<String,Object> map) {
+        String bakeCircleId = (String)map.get("bakeCircleId");
+        String token = (String)map.get("token");
+        String content = (String)map.get("content");
+        Comment comment = new Comment();
+        comment.setBakeCircleId(Integer.parseInt(bakeCircleId));
+        comment.setContent(content);
+        comment.setCommentTime(new Date());
         String accountId = stringRedisTemplate.opsForValue().get(token);
         User user = userDao.findByAccountId(accountId);
-        record.setUId(user.getUserId());
-        int insert = commentDao.insert(record);
-        Integer bakeCircleId = record.getBakeCircleId();
-        BakeCircle bakeCircle = bakeCircleDao.selectByPrimaryKey(bakeCircleId);
+        comment.setUId(user.getUserId());
+        int insert = commentDao.insert(comment);
+        Integer circleId = comment.getBakeCircleId();
+        BakeCircle bakeCircle = bakeCircleDao.selectByPrimaryKey(circleId);
         bakeCircle.setCommentNum(bakeCircle.getCommentNum()+1);
         bakeCircleDao.updateCommentNumByPrimaryKey(bakeCircle);
         return insert;

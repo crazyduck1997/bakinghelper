@@ -3,11 +3,12 @@ package com.qf.bakinghelper.service;
 import com.qf.bakinghelper.entity.Comment;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CommentService {
     int deleteByPrimaryKey(Integer commentId);
 
-    int insert(Comment record,String token);
+    int insert(Map<String,Object> map);
 
     Comment selectByPrimaryKey(Integer commentId);
 
