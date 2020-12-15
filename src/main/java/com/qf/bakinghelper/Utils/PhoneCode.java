@@ -17,8 +17,8 @@ public class PhoneCode {
     static final String domain = "dysmsapi.aliyuncs.com";
 
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-    static final String accessKeyId = "LTAI4Fh5LRW4GNkfFJyngyJp";  // TODO 修改成自己的
-    static final String accessKeySecret = "bKfSge4sbqdz13uDtybKv4wKvQN9Qi";   // TODO 修改成自己的
+    static final String accessKeyId = "";  // TODO 修改成自己的
+    static final String accessKeySecret = "";   // TODO 修改成自己的
 
     public static SendSmsResponse sendSms(String telephone, String code) throws ClientException {
         //可自助调整超时时间
